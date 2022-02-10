@@ -1,0 +1,28 @@
+{
+    "rs_peer":[
+        {
+            "type": "0",
+            "status": "busy"   
+        },
+        {
+            "type": "1",
+            "status": "forgiven"   
+        },
+        {
+            "type": "2",
+            "status": "rich"  
+        },
+        {
+            "type": "3",
+            "status": "passional"
+        },
+        {
+            "type": "4",
+            "status": "status_normal" 
+        },
+        {
+            "type": "5",
+            "status": "wordy"
+        }
+    ]
+}

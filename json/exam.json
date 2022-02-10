@@ -1,0 +1,22 @@
+{
+    "exam": [
+      {
+        "type": "0",
+        "title": "exam00",
+        "content": "",
+        "success": "80"
+      },
+      {
+        "type": "1",
+        "title": "exam01",
+        "content": "",
+        "success": "80"
+      },
+      {
+        "type": "2",
+        "title": "exam02",
+        "content": "",
+        "success": "80"
+      }
+    ]
+  }

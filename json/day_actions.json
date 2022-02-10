@@ -1,0 +1,19 @@
+{
+    "day_action_list":[
+        {
+            "type": "0",
+            "distractor": ["개인 과제", "동료 평가"],
+            "actions": [0, 1]
+        },
+        {
+            "type": "1",
+            "distractor": ["소스 작성", "소스 검토", "소스 제출"],
+            "actions": [2]
+        },
+        {
+            "type": "2",
+            "distractor": "a)개인 과제       b)동료 평가        c)러쉬 공부",
+            "actions": [0, 1, 3]
+        }
+    ]
+}

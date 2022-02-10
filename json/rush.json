@@ -1,0 +1,22 @@
+{
+    "rush": [
+      {
+        "type": "0",
+        "title": "rush00",
+        "content": "",
+        "success": "40"
+      },
+      {
+        "type": "1",
+        "title": "rush01",
+        "content": "",
+        "success": "25"
+      },
+      {
+        "type": "2",
+        "title": "rush02",
+        "content": "",
+        "success": "10"
+      }
+    ]
+  }
