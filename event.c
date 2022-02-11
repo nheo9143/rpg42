@@ -24,7 +24,7 @@ void    ft_event_day(t_event_day *event_day, t_user *user)  {
     }
 }
 
-void    day_work(int date, t_user *user, int day) {
+void    day_work(int date, t_user *user, t_event_day *day) {
     int kb = 0;
     int i = date % 3;
     char    actions[4][3][20] = {{"개인 과제", "동료 평가", "없음"}, 
@@ -34,12 +34,11 @@ void    day_work(int date, t_user *user, int day) {
 
     while (1)
     {
-		if (i == 0)
-		    action_normal_day(user, day, actions);
-        // else if (i == 1)
-        //     action_exam_day(user, action3);
-        // else if (i == 2)
-        //     action_rush_day(user, action4, action2);
+		if (i != 1)
+		    action_normal_day(user, day);
+        else if (i == 1)
+            action_exam_day(user, day);
+        day->day++;
 	   // 요일 출력 - 
         // 행동력 출력
         

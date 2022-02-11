@@ -6,17 +6,6 @@
 
 int linux_kbhit(void);
 
-void    print_header(void){
-    system("clear");
-    printf("########################################################################################\n");
-    printf("\n\n");
-}
-
-void    print_footer(void){
-    printf("\n\n");
-    printf("########################################################################################\n");
-}
-
 void    go_esc(char *str){
     printf("        %s : (esc)\n", str);
 }
@@ -47,7 +36,7 @@ void    print_title(void){
     printf("             | $$$$$$$ | $$$$$$$\\| $$ \\$$$$       \\$$$$$$$$|  $$$$$$ \n");
     printf("             | $$  | $$| $$|        $$__| $$            | $$| $$_____ \n");
     printf("             | $$  | $$| $$        \\$$    $$            | $$| $$     \\\n");
-    printf("              \\$$ \\$$ \\$$         \\$$$$$$              \\$$ \\$$$$$$$$\n");
+    printf("             \\$$ \\$$ \\$$           \\$$$$$$             \\$$ \\$$$$$$$$\n");
     printf("\n\n");
     print_footer();
     printf("press any key to start!");
@@ -118,19 +107,6 @@ int linux_kbhit(void)
     // 			default :
     // 				break;
     //         }
-        
-void	print_day_info(int day, t_user *user){
-    printf("       %10s:%d%48s : %d\n", "day", day, "남은 행동력", user->status->activ_point);
-    printf("                                                 s) %s, i) %s, e) %s\n", "status", "items", "equipment");
-}
-
-void    print_distractor(char act[3][20]){
-    
-    printf("              행동 목록\n\n");
-    printf("       a ) %s\n", act[0]);
-    printf("       b ) %s\n", act[1]);
-    printf("       c ) %s\n\n", act[2]);
-}
 
 int    use_action_point(t_user *user)
 {
@@ -141,10 +117,10 @@ int    use_action_point(t_user *user)
         print_header();
         printf("\n\n       남은 행동력 : %d\n\n", user->status->activ_point);
         printf("       사용할 행동력 : ");
+        scanf("%d", &use);
         if (use > user->status->activ_point)
             input_error();
-        scanf("%d", &use);
-        if (use <= user->status->activ_point)
+        else
         {
             user->status->activ_point -= use;
             return use;
@@ -155,40 +131,92 @@ int    use_action_point(t_user *user)
     return (0);
 }
 
-void    basic_txt_print(t_user *user, int day, char *str)
-{
-    int kb = 0;
-
-    while (1)
-    {
-        print_header();
-        print_day_info(day, user);
-        printf("\n\n\n\n\n\n\n\n");
-        printf("       %s\n", str);
-        go_esc("뒤로 가기");
-        print_footer();
-        kb = linux_kbhit();
-        if (kb == 27)
-            return ;
-    }    
-}
-
-void    distractor_format(t_user *user, int day, char *go_to, char act[3][20])
-{
-    print_header();
-    print_day_info(day, user);
-    printf("\n\n\n\n\n\n\n\n");
-    print_distractor(act);
-    go_esc(go_to);
-    print_footer();
-}
-
-void    basic_information_key(int kb, t_user *user)
+int    basic_information_key(int kb, t_user *user)
 {
     if (kb == 's')
         print_user_status(user);
-    // else if (kb == 'i')
-    //     print_item();
-    // else if (kb == 'e')
-    //     print_equip();
+    else if (kb == 'i')
+        print_item(user);
+    else if (kb == 'e')
+        print_equip(user);
+    return kb;
+}
+
+static size_t	ft_count_strs(char const *s, char c)
+{
+	size_t	i;
+
+	i = 0;
+	while (*s)
+	{
+		if (*s != c && *s)
+		{
+			while (*s != c && *s)
+				s++;
+			i++;
+		}
+		else
+			s++;
+	}
+	return (i);
+}
+
+static size_t	ft_count_chars(char const *s, char c)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] != c && s[i])
+		i++;
+	return (i);
+}
+
+static char const	*ft_next_strs(char const *s, char c, int i)
+{
+	if (i == 0)
+		while (*s && *s == c)
+			s++;
+	else
+		while (*s && *s != c)
+			s++;
+	return (s);
+}
+
+static char	**ft_free_strs(char **strs)
+{
+	size_t	i;
+
+	i = 0;
+	while (strs[i])
+	{
+		free(strs[i]);
+		strs[i++] = 0;
+	}
+	free(strs);
+	return (0);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	size_t	i;
+	size_t	num_strs;
+	char	**ptrs;
+
+	if (!s)
+		return (0);
+	i = 0;
+	num_strs = ft_count_strs(s, c) + 1;
+	ptrs = (char **)calloc(num_strs, sizeof(char *));
+	if (!ptrs)
+		return (0);
+	while (i + 1 < num_strs)
+	{
+		s = ft_next_strs(s, c, 0);
+		ptrs[i] = (char *)calloc(ft_count_chars(s, c) + 1, sizeof(char));
+		if (!ptrs[i])
+			return (ft_free_strs(ptrs));
+		strlcpy(ptrs[i++], s, ft_count_chars(s, c) + 1);
+		s = ft_next_strs(s, c, 1);
+	}
+	return (ptrs);
 }

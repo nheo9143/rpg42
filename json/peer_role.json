@@ -1,0 +1,28 @@
+{
+    "peer_role":[
+        {
+            "type": 0,
+            "name":"god",
+            "comment": "",
+            "comprehension": 80
+        },
+        {
+            "type": 1,
+            "name": "r_normal",
+            "comment": "",
+            "comprehension": 40
+        },
+        {
+            "type": 2,
+            "name": "baby",
+            "comment": "",
+            "comprehension": 10
+        },
+        {
+            "type": 3,
+            "name": "runner",
+            "comment": "",
+            "comprehension": 20
+        }
+    ]
+}

@@ -1,27 +1,25 @@
 #include "rpg42.h"
 
-void    operate_status(t_user *user, t_status operate){
-    user->status->exp += operate.exp;
-    user->status->activ_point += operate.activ_point;
-    user->status->dex += operate.dex;
-    user->status->fame += operate.fame;
-    user->status->intel += operate.intel;
-    user->status->luck += operate.luck;
-    user->status->mental += operate.mental;
-    user->status->fighting_point += operate.fighting_point;
-    user->status->level += operate.level;
+void    operate_status(t_user *user, t_subject operate){
+    user->status->exp += operate.reward.stat.exp;
+    user->status->activ_point += operate.reward.stat.activ_point;
+    user->status->dex += operate.reward.stat.dex;
+    user->status->fame += operate.reward.stat.fame;
+    user->status->intel += operate.reward.stat.intel;
+    user->status->luck += operate.reward.stat.luck;
+    user->status->mental += operate.reward.stat.mental;
+    user->status->fighting_point += operate.reward.stat.fighting_point;
+    user->status->level += operate.reward.stat.level;
 }
 
 void    subject_success(t_user *user)
 {
     int kb = 0;
     int lev_up = 0;
-    t_status operate;
     t_subject   *work;
 
     work = user->sub_list->personal;
-    operate = work->reward.stat;
-    operate_status(user, operate);
+    operate_status(user, *work);
     lev_up = check_level_up(user);
     user->sub_list->cur_personal++;
     while (1)
@@ -33,7 +31,6 @@ void    subject_success(t_user *user)
         printf("\n");
         go_esc("뒤로 가기");
         print_footer();
-        
         kb = linux_kbhit();
         if (kb == 27)
         {
@@ -86,5 +83,27 @@ void    subject_fail(t_user *user)
         kb = linux_kbhit();
         if (kb == 27)
             return ;
-    }    
+    }
+}
+
+void    print_success_massage_peer_eval(point)
+{
+    
+}
+
+void    great_eval(t_user *user, t_event_day *day, int point)
+{
+    user->status->intel += point;
+    print_screen(user, day, "코딩의 신과 동료평가를 진행했습니다. cs지식이 상승합니다!", "뒤로 가기");
+}
+
+void    good_eval(t_user *user, t_event_day *day, int point)
+{
+    user->status->intel += point / 2;
+    print_screen(user, day, "좋은 동료와 동료평가를 진행했습니다. cs지식이 소폭 상승합니다!", "뒤로 가기");
+}
+
+void    bad_eval(t_user *user, t_event_day *day, int point)
+{
+    print_screen(user, day, "건성건성 하는 동료와 평가를 진행했습니다. 어떻게든 평가를 하긴 했습니다.", "뒤로 가기");
 }

@@ -1,28 +1,28 @@
 {
     "peer_status":[
         {
-            "type": "0",
-            "status": "busy"   
+            "type":0,
+            "name":"busy"
         },
         {
-            "type": "1",
-            "status": "forgiven"   
+            "type":1,
+            "name":" forgiven"
         },
         {
-            "type": "2",
-            "status": "rich"  
+            "type":2,
+            "name":"rich"
         },
         {
-            "type": "3",
-            "status": "passional"
+            "type":3,
+            "name":"passional"
         },
         {
-            "type": "4",
-            "status": "normal" 
+            "type":4,
+            "name":"s_normal"
         },
         {
-            "type": "5",
-            "status": "wordy"
+            "type":5,
+            "name":"wordy"
         }
     ]
 }

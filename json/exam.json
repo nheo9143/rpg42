@@ -1,22 +1,37 @@
 {
     "exam": [
       {
-        "type": "0",
+        "type": 0,
         "title": "exam00",
         "content": "",
-        "success": "80"
+        "done":0,
+        "success": 80,
+        "hp": 100,
+        "avoid": 10,
+        "try_cnt": 0,
+        "time": 0
       },
       {
-        "type": "1",
+        "type": 1,
         "title": "exam01",
         "content": "",
-        "success": "80"
+        "done":0,
+        "success": 80,
+        "hp": 100,
+        "avoid": 10,
+        "try_cnt": 7,
+        "time": 0
       },
       {
-        "type": "2",
+        "type": 2,
         "title": "exam02",
         "content": "",
-        "success": "80"
+        "done":0,
+        "success": 80,
+        "hp": 100,
+        "avoid": 10,
+        "try_cnt": 7,
+        "time": 0
       }
     ]
   }

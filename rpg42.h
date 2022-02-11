@@ -1,5 +1,6 @@
 #ifndef RPG42_H
 # define RPG42_H
+# include <time.h>
 # include <stdio.h>     // 파일 처리 함수가 선언된 헤더 파일
 # include <stdlib.h>    // malloc, free 함수가 선언된 헤더 파일
 # include <stdbool.h>   // bool, true, false가 정의된 헤더 파일
@@ -24,7 +25,6 @@ typedef struct s_status {
 	int	activ_point;
 	int	fame;
 	int	fighting_point;
-	
 } t_status;
 
 typedef struct  sub_status 
@@ -36,6 +36,7 @@ typedef struct  sub_status
 	int avoid;
 	int try_cnt;
 	int time;
+	int done;
 }	t_sub_status;
 
 typedef enum _equip_type{
@@ -123,46 +124,40 @@ typedef struct s_act_personal
 	t_reward		reward;
 } t_act_personal;
 
-typedef struct s_rush_peer_type {
-	int		type;
-	char	staus[20];
-} t_rush_peer_type;
+typedef enum _peer_status {
+	busy = 0,
+	forgiven,
+	rich,
+	passional,
+	s_normal,
+	wordy
+}	peer_status;
 
-typedef struct s_rush_peer_status {
+typedef enum _peer_role {
+	god = 0,
+	r_normal,
+	baby,
+	runner
+}	peer_role;
+
+typedef struct s_peer_role {
 	int		type;
-	char	status[20];
+	char	name[20];
+	char	*comment;
 	int		comprehension;
-} t_rush_peer_status;
+} t_peer_role;
 
-typedef enum _rush_type {
-	rush00 = 0,
-	rush01,
-	rush02
-} rush_type;
+typedef struct s_peer_status {
+	int		type;
+	char	name[20];
+} t_peer_status;
 
 typedef	struct s_peer {
-	char				*name;
-	t_rush_peer_type	type;
-	t_rush_peer_status	status;
+	char			*name;
+	t_event			event;
+	t_peer_role		role;
+	t_peer_status	status;
 } t_peer;
-
-
-typedef struct s_work {
-	int			type;
-	t_event		event;
-	t_status	stat;
-	t_reward	reward;
-	t_peer		peer[2];
-}	t_work;
-
-typedef struct s_rush {
-	rush_type	num;
-	int			percent;
-	int			success;
-	t_peer		peer1;
-	t_peer		peer2;
-	t_reward	reward;
-} t_rush;
 
 typedef enum _week {
 	monday = 0,
@@ -183,6 +178,7 @@ typedef struct s_exam {
 	int avoid;
 	int try_cnt;
 	int time;
+	int	done;
 	t_status reward_status;
 	t_equip reward_equip;
 } t_exam;
@@ -199,20 +195,12 @@ typedef enum _action_type{
 	exam
 }	action_type;
 
-typedef struct s_action {
-	int			type;
-	t_event		event;
-	t_status	stat;
-	t_reward	reward;
-	t_peer		peer[2];
-}	t_action;
-
 typedef struct s_subject{
 	int				type;
 	t_event			event;
 	t_sub_status	stat;
 	t_reward		reward;
-	t_peer			peer[2];
+	t_peer			*peer;
 }	t_subject;
 
 typedef struct s_subject_list{
@@ -246,30 +234,33 @@ char    select_charictor(void);
 t_user		*init_user(char type);
 t_event_day	**init_event_day(void);
 //t_scheudule **init_scheudule(void);
-t_action	*init_action(void);
 t_subject_list *init_subjet_list();
 void    subject_success(t_user *user);
 void    subject_fail(t_user *user);
 void    print_header(void);
 void    print_footer(void);
 void    print_user_status(t_user *user);
-void    print_distractor(char act[3][20]);
 void    go_esc(char *str);
 void	go_next(char *str);
 int		linux_kbhit(void);
-void    operate_status(t_user *user, t_status operate);
-void    ft_event_day(t_event_day *event_day, t_user *user);
-void    action_normal_day(t_user *user, int day, char actions[4][3][20]);
-void    action_exam_day(t_user *user, char **action);
+void    operate_status(t_user *user, t_subject operate);
+void    print_equip(t_user *user);
+void    print_item(t_user *user);
+void    ft_event_day(t_event_day *day, t_user *user);
+void    action_normal_day(t_user *user, t_event_day *day);
+void    action_exam_day(t_user *user, t_event_day *day);
 int		use_action_point(t_user *user);
-void    day_work(int date, t_user *user, int day);
-void	print_day_info(int day, t_user *user);
+void    day_work(int date, t_user *user, t_event_day *day);
+void	print_day_info(t_event_day *day, t_user *user);
 int		check_level_up(t_user *user);
-void    basic_txt_print(t_user *user, int day, char *str);
-void    distractor_format(t_user *user, int day, char *go_to, char act[3][20]);
-void    basic_information_key(int kb, t_user *user);
-
-
+void    basic_txt_print(t_user *user, t_event_day *day, char *str);
+int		basic_information_key(int kb, t_user *user);
+void    great_eval(t_user *user, t_event_day *day, int point);
+void    good_eval(t_user *user, t_event_day *day, int point);
+void    bad_eval(t_user *user, t_event_day *day, int point);
+void    basic_txt_print(t_user *user, t_event_day *day, char *str);
+char	**ft_split(char const *s, char c);
+void    print_screen(t_user *user, t_event_day *day, char *text, char *distractor);
 //void    action_normal_day(t_user *user, char **action1, char **action2);
 
 #endif
