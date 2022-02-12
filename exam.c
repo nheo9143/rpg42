@@ -112,4 +112,5 @@ void    action_exam_day(t_user *user, t_event_day *day)
         if (kb == 27)
             break ;
     }
+    result_exam(user, day);
 }

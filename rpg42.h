@@ -262,5 +262,6 @@ void    basic_txt_print(t_user *user, t_event_day *day, char *str);
 char	**ft_split(char const *s, char c);
 void    print_screen(t_user *user, t_event_day *day, char *text, char *distractor);
 //void    action_normal_day(t_user *user, char **action1, char **action2);
+void    result_exam(t_user *user, t_event_day *day);
 
 #endif

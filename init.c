@@ -140,7 +140,6 @@ void *read_subject_from_json(char *sub_file, char *sub_name)
 
 	rootValue = json_parse_file(sub_file);
 	rootObject = json_value_get_object(rootValue);
-	reward = json_object_get_object(rootObject, "reward");
 	array = json_object_get_array(rootObject, sub_name);
 	count = json_array_get_count(array);
 	subject = calloc(count, sizeof(t_subject));
@@ -161,18 +160,19 @@ void *read_subject_from_json(char *sub_file, char *sub_name)
 		subject[i].event.content		= (char *)malloc(sizeof(char) * 1024);
 		strcpy(subject[i].event.title,	json_object_get_string(branchObj, "title"));
 		strcpy(subject[i].event.content,json_object_get_string(branchObj, "content"));
+		reward = json_object_get_object(branchObj, "reward");
 		if (reward != NULL)
 		{
 			status = json_object_get_object(reward, "status");
-			subject[i].reward_status.level			= (int)json_object_get_number(status, "level");
-			subject[i].reward_status.exp			= (int)json_object_get_number(status, "exp");
-			subject[i].reward_status.intel			= (int)json_object_get_number(status, "intel");
-			subject[i].reward_status.dex			= (int)json_object_get_number(status, "dex");
-			subject[i].reward_status.luck			= (int)json_object_get_number(status, "luck");
-			subject[i].reward_status.mental			= (int)json_object_get_number(status, "mental");
-			subject[i].reward_status.activ_point 	= (int)json_object_get_number(status, "activ_point");
-			subject[i].reward_status.fame 			= (int)json_object_get_number(status, "fame");
-			subject[i].reward_status.fighting_point = (int)json_object_get_number(status, "fighting_point");
+			subject[i].reward.stat.level			= (int)json_object_get_number(status, "level");
+			subject[i].reward.stat.exp				= (int)json_object_get_number(status, "exp");
+			subject[i].reward.stat.intel			= (int)json_object_get_number(status, "intel");
+			subject[i].reward.stat.dex				= (int)json_object_get_number(status, "dex");
+			subject[i].reward.stat.luck				= (int)json_object_get_number(status, "luck");
+			subject[i].reward.stat.mental			= (int)json_object_get_number(status, "mental");
+			subject[i].reward.stat.activ_point 		= (int)json_object_get_number(status, "activ_point");
+			subject[i].reward.stat.fame 			= (int)json_object_get_number(status, "fame");
+			subject[i].reward.stat.fighting_point 	= (int)json_object_get_number(status, "fighting_point");
 		}
 	}
 	

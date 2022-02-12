@@ -95,25 +95,27 @@ void    print_result_screen(t_user *user, t_event_day *day, t_subject exam, char
         print_header();
             if (day != NULL)
                 print_day_info(day, user);
-        printf("       %s를 완료했습니다. 획득 점수 : %d\n", subject, score);
+        printf("\n\n");
+        printf("       %s를 완료했습니다. 획득 점수 : %d\n\n", subject, score);
         if (exam.reward.stat.exp)
-            printf("       경험치 %d 증가", exam.reward.stat.exp * score / 100);
-        if (exam.reward.stat.activ_point)
-            printf("       행동력 %d 증가", exam.reward.stat.activ_point * score / 100);
-        if (exam.reward.stat.dex)
-            printf("       dex %d 증가", exam.reward.stat.dex * score / 100);
-        if (exam.reward.stat.fame)
-            printf("       fame %d 증가", exam.reward.stat.fame * score / 100);
+            printf("       %-6s %d 증가\n", "경험치", exam.reward.stat.exp * score / 100);
         if (exam.reward.stat.intel)
-            printf("       cs지식 %d 증가", exam.reward.stat.intel * score / 100);
+            printf("       %-6s %d 증가\n", "cs지식", exam.reward.stat.intel * score / 100);
+        if (exam.reward.stat.dex)
+            printf("       %-6s %d 증가\n", "dex", exam.reward.stat.dex * score / 100);
+        if (exam.reward.stat.fame)
+            printf("       %-6s %d 증가\n", "fame", exam.reward.stat.fame * score / 100);
         if (exam.reward.stat.luck)
-            printf("       luck %d 증가", exam.reward.stat.luck * score / 100);
+            printf("       %-6s %d 증가\n", "luck",exam.reward.stat.luck * score / 100);
         if (exam.reward.stat.mental)
-            printf("       mental %d 증가", exam.reward.stat.mental * score / 100);
+            printf("       %-6s %d 증가\n", "mental", exam.reward.stat.mental * score / 100);
         if (exam.reward.stat.fighting_point)
-            printf("       사기 %d 증가", exam.reward.stat.fighting_point * score / 100);
+            printf("       %-6s %d 증가\n", "사기", exam.reward.stat.fighting_point * score / 100);
+        if (exam.reward.stat.activ_point)
+            printf("       %-6s %d 증가\n", "행동력", exam.reward.stat.activ_point * score / 100);
         if (exam.reward.stat.level)
-            printf("       레벨 %d 증가", exam.reward.stat.level * score / 100);
+            printf("       %-6s %d 증가\n", "레벨", exam.reward.stat.level * score / 100);
+        check_level_up(user);
         printf("\n\n\n\n");
         printf("       (esc)뒤로 가기");
         print_footer();
@@ -123,7 +125,7 @@ void    print_result_screen(t_user *user, t_event_day *day, t_subject exam, char
     }
 }
 
-void    result_exam(t_user *user, t_event_day *day, int point)
+void    result_exam(t_user *user, t_event_day *day)
 {
     int cur_exam = user->sub_list->cur_exam;
     int score = user->sub_list->exam[cur_exam].stat.hp;
@@ -131,7 +133,7 @@ void    result_exam(t_user *user, t_event_day *day, int point)
     
     operate_status(user, exam);
 
-    print_result_screen(user, day, exam, exam.event.title, point);
+    print_result_screen(user, day, exam, exam.event.title, 100 - score);
   
 
 //    exam()를 진행했습니다.

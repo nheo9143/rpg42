@@ -10,7 +10,7 @@
         "avoid": 10,
         "try_cnt": 0,
         "time": 0,
-        "reward":[
+        "reward": {
           "status": {
             "level":0,
             "exp":0,
@@ -25,7 +25,7 @@
           "equip": {
             "none" : "none"
           }
-        ]
+        }
       },
       {
         "type": 1,
@@ -37,16 +37,21 @@
         "avoid": 10,
         "try_cnt": 7,
         "time": 0,
-        "status":{
-          "level":0,
-          "exp":0,
-          "intel":0,
-          "dex":0,
-          "luck":0,
-          "mental":0,
-          "activ_point":0,
-          "fame":0,
-          "fighting_point":0 
+        "reward": {
+          "status": {
+            "level":0,
+            "exp":0,
+            "intel":1,
+            "dex":1,
+            "luck":1,
+            "mental":1,
+            "activ_point":1,
+            "fame":0,
+            "fighting_point":0 
+          },
+          "equip": {
+            "none" : "none"
+          }
         }
       },
       {
@@ -59,16 +64,21 @@
         "avoid": 10,
         "try_cnt": 7,
         "time": 0,
-        "status":{
-          "level":0,
-          "exp":0,
-          "intel":0,
-          "dex":0,
-          "luck":0,
-          "mental":0,
-          "activ_point":0,
-          "fame":0,
-          "fighting_point":0 
+        "reward": {
+          "status": {
+            "level":0,
+            "exp":0,
+            "intel":1,
+            "dex":1,
+            "luck":1,
+            "mental":1,
+            "activ_point":1,
+            "fame":0,
+            "fighting_point":0 
+          },
+          "equip": {
+            "none" : "none"
+          }
         }
       }
     ]
