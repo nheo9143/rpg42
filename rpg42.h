@@ -10,7 +10,7 @@
 # define SUBJECT_PERSONAL_MAX 17
 # define SUBJECT_EXAM_MAX 3
 # define SUBJECT_RUSH_MAX 3
-# define EVENT_DAY_MAX 1
+# define EVENT_DAY_MAX 3
 # define EVENT_DAY_PATH "./event_day/"
 # define JSON_PATH "./json/"
 
@@ -232,7 +232,7 @@ void    input_error(void);
 void	print_title(void);
 char    select_charictor(void);
 t_user		*init_user(char type);
-t_event_day	**init_event_day(void);
+t_event_day	*init_event_day(void);
 //t_scheudule **init_scheudule(void);
 t_subject_list *init_subjet_list();
 void    subject_success(t_user *user);

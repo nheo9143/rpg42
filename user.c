@@ -1,4 +1,5 @@
 #include "rpg42.h"
+void print_personal_progressbar(int persent);
 
 void    print_user_status(t_user *user)
 {
@@ -15,10 +16,11 @@ void    print_user_status(t_user *user)
         printf("     type  : %u\n", type);
         printf("     level : %d\n", user->status->level);
         printf("     exp   : %d\n", user->status->exp);
-        printf("     현재 진행 중인 과제 : %s\n", user->sub_list->personal->event.title);
+        printf("     현재 진행 중인 과제 : %s", user->sub_list->personal->event.title);
+        print_personal_progressbar(user->sub_list->personal->stat.percent);
         printf("     ------------------------------------------------------------------------\n");
-        printf("     %-15s: %d (코딩 실력을 나타냅니다)\n", "cs", user->status->intel);
-        printf("     %-15s: %d (민첩이 높다면 빠르게 움직여 행동력 감소가 줄어듭니다)\n", "dex", user->status->dex);
+        printf("     %-15s: %d (코딩 실력을 나타냅니다)\n", "cs지식", user->status->intel);
+        printf("     %-15s: %d (민첩이 높다면 빠르게 움직입니다. 행동력을 더 많이 얻습니다.)\n", "dex", user->status->dex);
         printf("     %-15s: %d (\"life is unfair!\" 당신의 운을 나타냅니다)\n", "luck", user->status->luck);
         printf("     %-15s: %d (정신력이 없으면 실수하기 쉽습니다)\n", "mental", user->status->mental);
         printf("     %-15s: %d (하루동안 사용할 수 있는 행동력입니다)\n", "active_point", user->status->activ_point);
@@ -56,4 +58,19 @@ int check_level_up(t_user *user)
         i++;
     }
     return (i);
+}
+
+void print_personal_progressbar(int percent)
+{
+    int temp = percent;
+    printf(" [");
+    for (int i = 0; i < 20; i++)
+    {
+        if (temp > 0)
+            printf("█");
+        else
+            printf("-");
+        temp -= 5;
+    }
+    printf("] %d%%\n", percent);
 }

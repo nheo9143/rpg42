@@ -107,6 +107,26 @@ USER, EVENT_DAY
 
 //  7. 엔딩페이지
 
+static size_t	ft_count_strs(char const *s, char c)
+{
+	size_t	i;
+
+	i = 0;
+	while (*s)
+	{
+		if (*s != c && *s)
+		{
+			while (*s != c && *s)
+				s++;
+			i++;
+		}
+		else
+			s++;
+	}
+	return (i);
+}
+
+
 int		get_count_strs(char **str){
 	int	cnt;
 
@@ -161,7 +181,14 @@ int    print_distractor(char *distractor)
 
 void	print_day_info(t_event_day *day, t_user *user){
 	printf("       %s:%d%68s : %d\n", "day", day->day, "남은 행동력(시간)", user->status->activ_point);
-	printf("       %s:%-35s s)%s, i)%s, e)%s\n", "현재 과제", user->sub_list->personal->event.title, "status", "items", "equipment");
+    if (day->day % 3 == 2)
+    {
+    	printf("       %s:%d%-31s s)%s, i)%s, e)%s\n", "EXAM 진행도", 100 - user->sub_list->exam->stat.hp, "/100", "status", "items", "equipment");
+        printf("       %s:%d\n", "retry 횟수", user->sub_list->exam->stat.try_cnt);
+    }
+    else
+		printf("       %s:%-35s s)%s, i)%s, e)%s\n", "현재 과제", user->sub_list->personal->event.title, "status", "items", "equipment");
+	
 }
 
 void    print_screen(t_user *user, t_event_day *day, char *text, char *distractor)
@@ -169,7 +196,7 @@ void    print_screen(t_user *user, t_event_day *day, char *text, char *distracto
     int kb = 0;
 
 	// 헤더 푸터 출력
-    if (print_distractor(distractor) == 1)
+    if (ft_count_strs(distractor, ',') == 1)
 	{
 		while (1)
 		{
@@ -179,9 +206,10 @@ void    print_screen(t_user *user, t_event_day *day, char *text, char *distracto
                 print_day_info(day, user);
             print_text(text);
 			printf("\n\n\n\n\n\n\n\n");
-			printf("       뒤로 가기(esc)");
+			printf("       (esc)뒤로 가기");
             print_footer();
             kb = linux_kbhit();
+            basic_information_key(kb, user);
 			if (kb == 27)
 				return ;
 		}

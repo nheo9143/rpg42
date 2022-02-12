@@ -7,7 +7,7 @@
 void	start_42rpg(){
 	static	t_user	*user;
     int             day = 0;
-    t_event_day     **event_day;
+    t_event_day     *event_day;
 	char            chrtype;
 
     print_title();
@@ -18,15 +18,15 @@ void	start_42rpg(){
 	user = init_user(chrtype);
 	event_day = init_event_day();
     // 피신 시작 이벤트
-    ft_event_day(event_day[0], user);
     
     for (int i = 0; i < 3; i++)
     {
+        ft_event_day(event_day, user);
         // ft_event_day(event_day[i], user);
         // 0:개인과제 하는 날, 1:시험, 2:러쉬 활성화
-        day_work(i, user, *event_day);
-        day++;
-        user->status->activ_point = 10;
+        day_work(i, user, event_day);
+        user->status->activ_point = 100;
+        event_day++;
     }
     
     //유저 정보 조회 함수

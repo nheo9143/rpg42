@@ -38,7 +38,6 @@ void    day_work(int date, t_user *user, t_event_day *day) {
 		    action_normal_day(user, day);
         else if (i == 1)
             action_exam_day(user, day);
-        day->day++;
 	   // 요일 출력 - 
         // 행동력 출력
         

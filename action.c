@@ -135,7 +135,7 @@ void    action_normal_day(t_user *user, t_event_day *day)
             personal_action(user, day);
         else if (kb == 'b')
             peer_eval_action(user, day);
-        else if (kb == 'c' && (day->day == 2))
+        else if (kb == 'c' && (day->day == 3))
             rush_action(user, day);
         else if (kb == 'c')
             print_screen(user, day, "RUSH 진행 기간이 아닙니다", "뒤로 가기");
@@ -177,7 +177,7 @@ void    rush_action(t_user *user, t_event_day *day)
                 peer[i].role.comprehension += (rand() % (use * ran)) / 2;
                 break;
             case forgiven:
-                print_screen(user, day, "동료가 러쉬를 포기했습니다ㅠㅠ", "뒤로 가기");
+                print_screen(user, day, "동료 cgim이 러쉬를 포기했습니다ㅠㅠ", "뒤로 가기");
                 peer[i].role.comprehension = 0;
                 break;
         }

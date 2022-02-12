@@ -58,8 +58,8 @@ t_user		*init_user(char type) {
 	return user;
 }
 
-t_event_day	**init_event_day() {
-	t_event_day **event_day;
+t_event_day	*init_event_day() {
+	t_event_day *day;
 	JSON_Value  *rootValue;
 	JSON_Object *rootObject;
 	JSON_Object *event;
@@ -67,100 +67,38 @@ t_event_day	**init_event_day() {
 	char path[20];
 	char num[10];
 	char *file;
-	
-	event_day = (t_event_day **)malloc(sizeof(t_event_day *));
+
+	day = (t_event_day *)malloc(sizeof(t_event_day) * EVENT_DAY_MAX);
 	file = (char *)malloc(sizeof(char) * 20);
-	strcat(path, EVENT_DAY_PATH);
 	for (int i = 0; i < EVENT_DAY_MAX; i++)
 	{
-		event_day[i] = (t_event_day *)malloc(sizeof(t_event_day));
-		event_day[i]->event_title = (char *)malloc(sizeof(char) * 30);
-		event_day[i]->event_content = (char *)malloc(sizeof(char) * 1024);
 		sprintf(num, "%d", i + 1);
-		strcpy(file, path);
+		strcpy(file, EVENT_DAY_PATH);
 		strcat(file, num);
 		strcat(file, ".json");
-		rootValue = json_parse_file(file);
+		rootValue  = json_parse_file(file);
 		rootObject = json_value_get_object(rootValue);
 		event  = json_object_get_object(rootObject, "event");
 		status = json_object_get_object(rootObject, "status");
-		parse_event(event_day[i], event);
-		printf("%s\n", event_day[0]->event_content);
-		parse_status(&(event_day[i]->reward_status),status);
-		
+		/* day 값 설정 */
+		day[i].day = (int)json_object_get_number(event, "day");
+		day[i].event_title   = (char *)malloc(sizeof(char) * 32);
+		day[i].event_content = (char *)malloc(sizeof(char) * 1024);
+		strcpy(day[i].event_title,   (char *)json_object_get_string(event, "title"));
+		strcpy(day[i].event_content, (char *)json_object_get_string(event, "content"));
+		day[i].reward_status.level			= (int)json_object_get_number(status, "level");
+		day[i].reward_status.exp			= (int)json_object_get_number(status, "exp");
+		day[i].reward_status.intel			= (int)json_object_get_number(status, "intel");
+		day[i].reward_status.dex			= (int)json_object_get_number(status, "dex");
+		day[i].reward_status.luck			= (int)json_object_get_number(status, "luck");
+		day[i].reward_status.mental		= (int)json_object_get_number(status, "mental");
+		day[i].reward_status.activ_point 	= (int)json_object_get_number(status, "activ_point");
+		day[i].reward_status.fame 			= (int)json_object_get_number(status, "fame");
+		day[i].reward_status.fighting_point= (int)json_object_get_number(status, "fighting_point");
 		json_value_free(rootValue);
 	}
 	free(file);
-	  return event_day;
-}
-
-// t_action	*init_action() {
-// 	t_action	*action[ACTION_MAX];
-// 	char		*filePath;
-// 	char		*doc;
- 
-// 	action = (t_action **)malloc(sizeof(t_action *));
-// 	filePath = strcat(JSON_PATH, ACTION_FILE);
-// 	doc = readFile(filePath, &size);
-// 	if (doc == NULL)
-// 		return -1;
-// 	JSON json = { 0, };    // JSON 구조체 변수 선언 및 초기화
-// 	parseJSON(doc, size, &json);
-// 	event_day[0] = json.tokens[0].string;
-// 	event_day[1] = json.tokens[1].string;
-// 	for (int j = 2; j < 11; j++) {
-// 		event_day[2] = atoi(json.tokens[1].string);
-// 	}
-// 	freeJSON(&json);    // json 안에 할당된 동적 메모리 해제
-// 	free(doc);    // 문서 동적 메모리 해제
-// 	return event_day;
-// }
-
-//t_day **init_scheudule(){
-//	t_day 		**work;
-//	JSON_Value	*rootValue;
-//	JSON_Object	*rootObject;
-//	JSON_Array	*array;
-//	JSON_Value	*branchVal;
-//	JSON_Object	*branchObj;
-//	char		path[20];
-//	char		num[10];
-//	char		*file;
-//	int			count;
-
-//	file = (char *)malloc(sizeof(char) * 20);
-//	strcpy(file, JSON_PATH);
-//	strcat(file, ACTION_FILE);
-
-//	rootValue = json_parse_file(file);
-//	rootObject = json_value_get_object(rootValue);
-//	array = json_object_get_array(rootObject, "work");
-//	count = json_array_get_count(array);
-//	work = (t_day **)malloc(sizeof(t_day *) * count);
-//	// for (int i = 0; i < count; i++)
-//	// {
-//	// 	work[i] = (t_day *)malloc(sizeof(t_day));
-//	// 	branchVal = json_array_get_value(array, i);
-//	// 	branchObj = json_value_get_object(branchVal);
-//	// 	work[i]->action->type		= (int)json_object_get_number(branchObj, "type");
-//	// 	work[i]->action->distractor = (char *)malloc(sizeof(char) * 1024);
-//	// 	strcpy(work[i]->action->distractor (char *)json_object_get_string(branchObj, "distractor"));
-//	// }
-//	json_value_free(rootValue);
-//	free(file);
-//	return work;
-//}
-
-t_event_day *parse_event(t_event_day *event, JSON_Object *json){
-	char    *title;
-	char    *content;
-
-	event->day = (int)json_object_get_number(json, "day");
-	title = (char *)json_object_get_string(json, "title");
-	content= (char *)json_object_get_string(json, "content");
-	strcpy(event->event_title, title);
-	strcpy(event->event_content, content);
-	return event;
+	return day;
 }
 
 t_subject_list *init_subjet_list(){
@@ -195,11 +133,14 @@ void *read_subject_from_json(char *sub_file, char *sub_name)
 	JSON_Array	*array;
 	JSON_Value	*branchVal;
 	JSON_Object	*branchObj;
+	JSON_Object	*reward;
+	JSON_Object	*status;
 	t_subject	*subject;
 	int			count;
 
 	rootValue = json_parse_file(sub_file);
 	rootObject = json_value_get_object(rootValue);
+	reward = json_object_get_object(rootObject, "reward");
 	array = json_object_get_array(rootObject, sub_name);
 	count = json_array_get_count(array);
 	subject = calloc(count, sizeof(t_subject));
@@ -207,6 +148,7 @@ void *read_subject_from_json(char *sub_file, char *sub_name)
 	{
 		branchVal = json_array_get_value(array, i);
 		branchObj = json_value_get_object(branchVal);
+		
 		subject[i].type					= (int)json_object_get_number(branchObj, "type");
 		subject[i].stat.success			= (int)json_object_get_number(branchObj, "success");
 		subject[i].stat.avoid			= (int)json_object_get_number(branchObj, "avoid");
@@ -219,7 +161,21 @@ void *read_subject_from_json(char *sub_file, char *sub_name)
 		subject[i].event.content		= (char *)malloc(sizeof(char) * 1024);
 		strcpy(subject[i].event.title,	json_object_get_string(branchObj, "title"));
 		strcpy(subject[i].event.content,json_object_get_string(branchObj, "content"));
+		if (reward != NULL)
+		{
+			status = json_object_get_object(reward, "status");
+			subject[i].reward_status.level			= (int)json_object_get_number(status, "level");
+			subject[i].reward_status.exp			= (int)json_object_get_number(status, "exp");
+			subject[i].reward_status.intel			= (int)json_object_get_number(status, "intel");
+			subject[i].reward_status.dex			= (int)json_object_get_number(status, "dex");
+			subject[i].reward_status.luck			= (int)json_object_get_number(status, "luck");
+			subject[i].reward_status.mental			= (int)json_object_get_number(status, "mental");
+			subject[i].reward_status.activ_point 	= (int)json_object_get_number(status, "activ_point");
+			subject[i].reward_status.fame 			= (int)json_object_get_number(status, "fame");
+			subject[i].reward_status.fighting_point = (int)json_object_get_number(status, "fighting_point");
+		}
 	}
+	
 	json_value_free(rootValue);
 	return	(void *)subject;
 }
@@ -254,9 +210,9 @@ void *init_peers()
 	peer_status	= read_peer_status_from_json(file, "peer_status", &role_count);
 
 	srand(time(NULL));
-	memmove((void *)&peer->event,	&peer_event[rand() % event_count + 1], sizeof(t_event));
-	memmove((void *)&peer->role,	&peer_role[rand() % role_count + 1], sizeof(t_peer_role));
-	memmove((void *)&peer->status,	&peer_status[rand() % status_count + 1], sizeof(t_peer_status));
+	memmove((void *)&peer->event,	&peer_event[rand() % event_count], sizeof(t_event));
+	memmove((void *)&peer->role,	&peer_role[rand() % role_count], sizeof(t_peer_role));
+	memmove((void *)&peer->status,	&peer_status[rand() % status_count], sizeof(t_peer_status));
 
 	free(file);
 	free(peer_event);
@@ -347,16 +303,4 @@ void *read_peer_status_from_json(char *file, char *name, int* ret_count){
 	*ret_count = count;
 	json_value_free(rootValue);
 	return	(void *)status;
-}
-
-void parse_status(t_status *status, JSON_Object *json){
-	status->level			= (int)json_object_get_number(json, "level");
-	status->exp				= (int)json_object_get_number(json, "exp");
-	status->intel			= (int)json_object_get_number(json, "intel");
-	status->dex				= (int)json_object_get_number(json, "dex");
-	status->luck			= (int)json_object_get_number(json, "luck");
-	status->mental			= (int)json_object_get_number(json, "mental");
-	status->activ_point 	= (int)json_object_get_number(json, "activ_point");
-	status->fame 			= (int)json_object_get_number(json, "fame");
-	status->fighting_point	= (int)json_object_get_number(json, "fighting_point");
 }

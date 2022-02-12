@@ -2,17 +2,6 @@
 
 //멘탈 관련 추가!!
 
-void    distractor_format_exam(t_user *user, t_event_day *day, char *go_to)
-{
-    print_header();
-    printf("       %s:%d%68s : %d\n", "day", day->day, "남은 행동력(시간)", user->status->activ_point);
-    printf("       %s:%-35d s)%s, i)%s, e)%s\n", "EXAM 진행도", 100 - user->sub_list->exam->stat.hp, "status", "items", "equipment");
-    printf("       %s:%d\n", "retry 횟수", user->sub_list->exam->stat.try_cnt);    printf("\n\n\n\n\n\n\n\n");
-    // print_distractor(act);
-    // go_esc(go_to);
-    print_footer();
-}
-
 void    basic_exam_print(t_user *user, t_event_day *day, char *str)
 {
     int kb = 0;
@@ -48,7 +37,7 @@ void    do_exam(t_user *user, t_event_day *day){
     }
     work->stat.done = 1;
     use = use_action_point(user);
-    ran = rand() % user->status->luck;
+    ran = rand() % user->status->luck + (use);
     if (ran > work->stat.avoid)
         work->stat.success = 1;
     else
@@ -123,5 +112,4 @@ void    action_exam_day(t_user *user, t_event_day *day)
         if (kb == 27)
             break ;
     }
-
 }
