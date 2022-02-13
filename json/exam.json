@@ -2,14 +2,18 @@
     "exam": [
       {
         "type": 0,
-        "title": "exam00",
-        "content": "",
-        "done":0,
-        "success": 80,
-        "hp": 100,
-        "avoid": 10,
-        "try_cnt": 0,
-        "time": 0,
+        "event":{
+          "title": "exam00",
+          "content": ""
+        },
+        "status":{
+          "done":0,
+          "success": 80,
+          "hp": 100,
+          "avoid": 10,
+          "try_cnt": 0,
+          "time": 0
+        },
         "reward": {
           "status": {
             "level":0,
@@ -29,14 +33,18 @@
       },
       {
         "type": 1,
-        "title": "exam01",
-        "content": "",
-        "done":0,
-        "success": 80,
-        "hp": 100,
-        "avoid": 10,
-        "try_cnt": 7,
-        "time": 0,
+        "event":{
+          "title": "exam01",
+          "content": ""
+        },
+        "status":{
+          "done":0,
+          "success": 80,
+          "hp": 100,
+          "avoid": 10,
+          "try_cnt": 0,
+          "time": 0
+        },
         "reward": {
           "status": {
             "level":0,
@@ -56,14 +64,18 @@
       },
       {
         "type": 2,
-        "title": "exam02",
-        "content": "",
-        "done":0,
-        "success": 80,
-        "hp": 100,
-        "avoid": 10,
-        "try_cnt": 7,
-        "time": 0,
+        "event":{
+          "title": "exam02",
+          "content": ""
+        },
+        "status":{
+          "done":0,
+          "success": 80,
+          "hp": 100,
+          "avoid": 10,
+          "try_cnt": 0,
+          "time": 0
+        },
         "reward": {
           "status": {
             "level":0,

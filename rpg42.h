@@ -11,7 +11,7 @@
 # define SUBJECT_PERSONAL_MAX 17
 # define SUBJECT_EXAM_MAX 3
 # define SUBJECT_RUSH_MAX 3
-# define EVENT_DAY_MAX 3
+# define EVENT_DAY_MAX 7
 # define EVENT_DAY_PATH "./event_day/"
 # define JSON_PATH "./json/"
 
@@ -72,12 +72,21 @@ typedef enum _user_type	{
 	비전공자
 }	user_type;
 
+typedef struct s_event {
+	char	*title;
+	char	*content;
+}	t_event;
+
+typedef struct s_reward {
+	t_status stat;
+	t_equip equip;
+}	t_reward;
+
 typedef struct s_event_day
 {
 	int			day;
-	char		*event_title;
-	char		*event_content;
-	t_status	reward_status;	
+	t_event 	event;
+	t_reward	reward;	
 } t_event_day;
 
 typedef enum _personal_quest
@@ -101,16 +110,6 @@ typedef enum _personal_quest
 	C14,
 	C15
 } personal_quest;
-
-typedef struct s_event {
-	char	*title;
-	char	*content;
-}	t_event;
-
-typedef struct s_reward {
-	t_status stat;
-	t_equip equip;
-}	t_reward;
 
 typedef struct s_personal_stat {
 	int			percent;
@@ -244,7 +243,7 @@ void    print_user_status(t_user *user);
 void    go_esc(char *str);
 void	go_next(char *str);
 int		linux_kbhit(void);
-void    operate_status(t_user *user, t_status operate);
+void    operate_status(t_user *user, t_status operate, int score);
 void    print_equip(t_user *user);
 void    print_item(t_user *user);
 void    ft_event_day(t_event_day *day, t_user *user);
@@ -259,7 +258,6 @@ int		basic_information_key(int kb, t_user *user);
 void    basic_txt_print(t_user *user, t_event_day *day, char *str);
 char	**ft_split(char const *s, char c);
 void    print_screen(t_user *user, t_event_day *day, char *text, char *distractor);
-//void    action_normal_day(t_user *user, char **action1, char **action2);
 void    result_exam(t_user *user, t_event_day *day);
 int ask_exit(t_user *user, t_event_day *day);
 void	print_peer(t_user *user, t_event_day *day);
@@ -267,5 +265,7 @@ void	print_work(t_user * user);
 void    progress_message(char *name, char *act);
 void    print_peer_type(t_user *user, t_event_day *day, char *name, char *type, int point);
 void    print_eval(t_user *user, t_event_day *day, int point);
+void    result_rush(t_user *user, t_event_day *day);
+
 
 #endif

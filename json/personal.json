@@ -2,69 +2,289 @@
     "personal": [
       {
         "type": 0,
-        "title": "shell00",
-        "content": "",
-        "success": 80
+        "event":{
+          "title": "shell00",
+          "content": "shell00, 쉘을 다루는 기본적인 방법을 다루는 과제다."
+        },
+        "status":{
+          "success": 80
+        },
+        "reward": {
+            "status": {
+              "level":0,
+              "exp":0,
+              "intel":1,
+              "dex":1,
+              "luck":1,
+              "mental":1,
+              "activ_point":1,
+              "fame":0,
+              "fighting_point":0 
+            },
+            "equip": {
+              "none" : "none"
+            }
+          }
       },
       {
         "type": 1,
-        "title": "shell01",
-        "content": "",
-        "success": 75
+        "event":{
+          "title": "shell01",
+          "content": ""
+        },
+        "status":{
+          "success": 75
+        },
+        "reward": {
+            "status": {
+              "level":0,
+              "exp":0,
+              "intel":1,
+              "dex":1,
+              "luck":1,
+              "mental":1,
+              "activ_point":1,
+              "fame":0,
+              "fighting_point":0 
+            },
+            "equip": {
+              "none" : "none"
+            }
+          }
       },
       {
         "type": 2,
-        "title": "C00",
-        "content": "",
-        "success": 70
+        "event":{
+          "title": "C00",
+          "content": ""
+        },
+        "status":{
+          "success": 70
+        },
+        "reward": {
+            "status": {
+              "level":0,
+              "exp":0,
+              "intel":1,
+              "dex":1,
+              "luck":1,
+              "mental":1,
+              "activ_point":1,
+              "fame":0,
+              "fighting_point":0 
+            },
+            "equip": {
+              "none" : "none"
+            }
+          }
       },
       {
         "type": 3,
-        "title": "C01",
-        "content": "",
-        "success": 65
+        "event":{
+          "title": "C01",
+          "content": ""
+        },
+        "status":{
+          "success": 65
+        },
+        "reward": {
+            "status": {
+              "level":0,
+              "exp":0,
+              "intel":1,
+              "dex":1,
+              "luck":1,
+              "mental":1,
+              "activ_point":1,
+              "fame":0,
+              "fighting_point":0 
+            },
+            "equip": {
+              "none" : "none"
+            }
+          }
       },
       {
         "type": 4,
-        "title": "C02",
-        "content": "",
-        "success": 50
+        "event":{
+          "title": "C02",
+          "content": ""
+        },
+        "status":{
+          "success": 50
+        },
+        "reward": {
+            "status": {
+              "level":0,
+              "exp":0,
+              "intel":1,
+              "dex":1,
+              "luck":1,
+              "mental":1,
+              "activ_point":1,
+              "fame":0,
+              "fighting_point":0 
+            },
+            "equip": {
+              "none" : "none"
+            }
+          }
       },
       {
         "type": 5,
-        "title": "C03",
-        "content": "",
-        "success": 50
+        "event":{
+          "title": "C03",
+          "content": ""
+        },
+        "status":{
+          "success": 50
+        },
+        "reward": {
+            "status": {
+              "level":0,
+              "exp":0,
+              "intel":1,
+              "dex":1,
+              "luck":1,
+              "mental":1,
+              "activ_point":1,
+              "fame":0,
+              "fighting_point":0 
+            },
+            "equip": {
+              "none" : "none"
+            }
+          }
       },
       {
         "type": 6,
-        "title": "C04",
-        "content": "",
-        "success": 50
+        "event":{
+          "title": "C04",
+          "content": ""
+        },
+        "status":{
+          "success": 50
+        },
+        "reward": {
+            "status": {
+              "level":0,
+              "exp":0,
+              "intel":1,
+              "dex":1,
+              "luck":1,
+              "mental":1,
+              "activ_point":1,
+              "fame":0,
+              "fighting_point":0 
+            },
+            "equip": {
+              "none" : "none"
+            }
+          }
       },
       {
         "type": 7,
-        "title": "C05",
-        "content": "",
-        "success": 40
+        "event":{
+          "title": "C05",
+          "content": ""
+        },
+        "status":{
+          "success": 50
+        },
+        "reward": {
+            "status": {
+              "level":0,
+              "exp":0,
+              "intel":1,
+              "dex":1,
+              "luck":1,
+              "mental":1,
+              "activ_point":1,
+              "fame":0,
+              "fighting_point":0 
+            },
+            "equip": {
+              "none" : "none"
+            }
+          }
       },
       {
         "type": 8,
-        "title": "C06",
-        "content": "",
-        "success": 80
+        "event":{
+          "title": "C06",
+          "content": ""
+        },
+        "status":{
+          "success": 80
+        },
+        "reward": {
+            "status": {
+              "level":0,
+              "exp":0,
+              "intel":1,
+              "dex":1,
+              "luck":1,
+              "mental":1,
+              "activ_point":1,
+              "fame":0,
+              "fighting_point":0 
+            },
+            "equip": {
+              "none" : "none"
+            }
+          }
       },
       {
         "type": 9,
-        "title": "C07",
-        "content": "",
-        "success": 30
+        "event":{
+          "title": "C07",
+          "content": ""
+        },
+        "status":{
+          "success": 30
+        },
+        "reward": {
+            "status": {
+              "level":0,
+              "exp":0,
+              "intel":1,
+              "dex":1,
+              "luck":1,
+              "mental":1,
+              "activ_point":1,
+              "fame":0,
+              "fighting_point":0 
+            },
+            "equip": {
+              "none" : "none"
+            }
+          }
       },
       {
         "type": 10,
-        "title": "C08",
-        "content": "",
-        "success": 30
+        "event":{
+          "title": "C08",
+          "content": ""
+        },
+        "status":{
+          "success": 30
+        },
+        "reward": {
+            "status": {
+              "level":0,
+              "exp":0,
+              "intel":1,
+              "dex":1,
+              "luck":1,
+              "mental":1,
+              "activ_point":1,
+              "fame":0,
+              "fighting_point":0 
+            },
+            "equip": {
+              "none" : "none"
+            }
+          }
       }
     ]
   }

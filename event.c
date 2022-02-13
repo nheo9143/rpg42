@@ -2,14 +2,14 @@
 
 void    ft_event_day(t_event_day *event_day, t_user *user)  {
     int kb = 0;
-    t_status stat = event_day->reward_status;
+    t_status stat = event_day->reward.stat;
 
     while (1)
     {
-        operate_status(user, stat);
+        operate_status(user, stat, 100);
         print_header();
-        printf("      DAY %d - %s\n\n", event_day->day, event_day->event_title);
-        printf("      %s\n", event_day->event_content);
+        printf("      DAY %d - %s\n\n", event_day->day, event_day->event.title);
+        printf("      %s\n", event_day->event.content);
          if (stat.exp)
             printf("       %-6s %d\n", "경험치", stat.exp);
         else
@@ -64,7 +64,8 @@ void    day_work(int date, t_user *user, t_event_day *day) {
 		    action_normal_day(user, day);
         else if (i == 1)
             action_exam_day(user, day);
-        
+        if (i == 2 && user->sub_list->rush[user->sub_list->cur_rush].stat.done)
+            result_rush(user, day);
 	   // 요일 출력 - 
         // 행동력 출력
         

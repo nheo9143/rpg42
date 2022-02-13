@@ -1,8 +1,10 @@
 {
     "peer_event" : [
         {
-            "title":"",
-            "content":""
+            "event":{
+                "title":"",
+                "content":""
+            }
         }
     ]
 }

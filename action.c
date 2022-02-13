@@ -41,17 +41,17 @@ void    do_project(t_user *user, t_event_day *day){
 
 void    review_project(t_user *user, t_event_day *day)   {
     int ran = 0;
+    int cur = user->sub_list->cur_personal;
 
-    if (user->sub_list->personal->stat.percent < 100)
+    if (user->sub_list->personal[cur].stat.percent < 100)
     {
         print_screen(user, day, "과제를 다 진행하지 못했습니다. 과제를 다 작성해 주세요.", "뒤로 가기");
         return ;
     }
-    progress_message(user->sub_list->personal->event.title, "검토");
+    progress_message(user->sub_list->personal[cur].event.title, "검토");
     ran = rand() % user->status->luck;
-    //수정 필요??라
     print_screen(user, day, "과제를 검토했습니다. 제출시 성공률이 증가합니다.", "뒤로 가기");
-    user->sub_list->personal->stat.success += ran;
+    user->sub_list->personal[cur].stat.success += ran;
     user->status->activ_point--;
 }
 
@@ -80,9 +80,7 @@ void    push_project(t_user *user, t_event_day *day){
 
 void    peer_eval_action(t_user *user, t_event_day *day)
 {
-    int use = 0;
-    int ran = 0;
-    int suc = 0;
+    int use;
 
     use = use_action_point(user);
     if (use == 0)
@@ -147,19 +145,20 @@ void    rush_action(t_user *user, t_event_day *day)
 {
     int         ran = 0;
     int         use = 0;
+    int         cur = user->sub_list->cur_rush;
     int         user_compre;
     int         sum = 0;
     t_peer      *peer;
     t_subject   *work;
 
-    work = user->sub_list->rush;
-    ran = rand() % user->status->intel;
+    work = &user->sub_list->rush[cur];    
+    user_compre = rand() % user->status->intel;
     peer = work->peer;
-    user_compre = ran;
+    
     use = use_action_point(user);
     if (use == 0)
         return ;
-    progress_message(user->sub_list->rush->event.title, "진행");
+    progress_message(work->event.title, "진행");
     for (int i = 0; i < 2; i++){
         switch (peer[i].status.type)
         {
@@ -185,8 +184,9 @@ void    rush_action(t_user *user, t_event_day *day)
         }
         sum += peer[i].role.comprehension;
     }
-    user->sub_list->rush->stat.comprehension += use * user_compre;
+    work->stat.comprehension += use * user_compre;
     sum += user->sub_list->rush->stat.comprehension;
+    work->stat.percent = sum / 3;
     if (sum <= 50)
         print_screen(user, day, "이번 RUSH는 망한 것 같습니다ㅠㅠ", "뒤로 가기");
     else if (sum <= 100)
@@ -200,6 +200,3 @@ void    rush_action(t_user *user, t_event_day *day)
     else if (sum > 250)
         print_screen(user, day, "RUSH의 신이 된 기분입니다. 완벽하게 디펜스를 할 수 있을 것 같습니다.", "뒤로 가기");
 }
-
-// basic_txt_print(user, day, peer[0].role.comment);
-// basic_txt_print(user, day, peer[1].role.comment);

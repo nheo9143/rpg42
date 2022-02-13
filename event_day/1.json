@@ -1,18 +1,22 @@
 {
     "event":{
-        "day":1,
-        "title":"오리엔테이션",
-	    "content":"오늘은 피신 첫날. 정말 기대가 된다. 5252 잘해보자구~"
+        "title": "오리엔테이션",
+        "content": "오늘은 피신 첫날. 정말 기대가 된다. 5252 잘해보자구~"
     },
-	"status":{
-        "level":0,
-        "exp":0,
-        "intel":0,
-        "dex":0,
-        "luck":0,
-        "mental":0,
-        "activ_point":0,
-        "fame":0,
-        "fighting_point":0
+	"reward":{
+        "status":{
+            "level":0,
+            "exp":0,
+            "intel":0,
+            "dex":0,
+            "luck":0,
+            "mental":0,
+            "activ_point":0,
+            "fame":0,
+            "fighting_point":0 
+        },
+        "equip": {
+            "none" : "none"
+        }
     }
 }

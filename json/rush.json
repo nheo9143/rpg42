@@ -2,33 +2,91 @@
     "rush": [
       {
         "type": 0,
-        "title": "rush00",
-        "content": "",
+        "event":{
+          "title": "rush00",
+          "content": ""
+        },
         "success": 40,
         "hp": 100,
         "avoid": 10,
         "try_cnt": 7,
-        "time": 0
+        "time": 0,
+        "reward": {
+          "status": {
+            "level":0,
+            "exp":0,
+            "intel":1,
+            "dex":1,
+            "luck":1,
+            "mental":1,
+            "activ_point":1,
+            "fame":0,
+            "fighting_point":0 
+          },
+          "equip": {
+            "none" : "none"
+          }
+        }
       },
       {
         "type": 1,
-        "title": "rush01",
-        "content": "",
-        "success": 25,
-        "hp": 100,
-        "avoid": 10,
-        "try_cnt": 7,
-        "time": 0
+        "event":{
+          "title": "rush01",
+          "content": ""
+        },
+        "status":{
+          "success": 50,
+          "hp": 100,
+          "avoid": 10,
+          "try_cnt": 7,
+          "time": 0
+        },
+        "reward": {
+          "status": {
+            "level":0,
+            "exp":0,
+            "intel":1,
+            "dex":1,
+            "luck":1,
+            "mental":1,
+            "activ_point":1,
+            "fame":0,
+            "fighting_point":0 
+          },
+          "equip": {
+            "none" : "none"
+          }
+        }
       },
       {
         "type": 2,
-        "title": "rush02",
-        "content": "",
-        "success": 10,
-        "hp": 100,
-        "avoid": 10,
-        "try_cnt": 7,
-        "time": 0
+        "event":{
+          "title": "rush01",
+          "content": ""
+        },
+        "status":{
+          "success": 10,
+          "hp": 100,
+          "avoid": 10,
+          "try_cnt": 7,
+          "time": 0
+        },
+        "reward": {
+          "status": {
+            "level":0,
+            "exp":0,
+            "intel":1,
+            "dex":1,
+            "luck":1,
+            "mental":1,
+            "activ_point":1,
+            "fame":0,
+            "fighting_point":0 
+          },
+          "equip": {
+            "none" : "none"
+          }
+        }
       }
     ]
   }

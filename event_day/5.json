@@ -1,16 +1,16 @@
 {
     "event":{
-        "title": "폭우",
-        "content": "비가 너무 많이 내려서 쫄딱 젖고 클러스터에도 늦게 도착했다."
+        "title":"Event 5",
+	    "content":"며칠동안 잠을 제대로 못 잤더니 항상 피곤하다."
     },
-	"reward":{
+    "reward":{
         "status":{
             "level":0,
             "exp":0,
             "intel":0,
             "dex":0,
             "luck":0,
-            "mental":0,
+            "mental":-5,
             "activ_point":-10,
             "fame":0,
             "fighting_point":0 

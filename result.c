@@ -1,15 +1,15 @@
 #include "rpg42.h"
 
-void    operate_status(t_user *user, t_status operate){
-    user->status->exp += operate.exp;
-    user->status->activ_point += operate.activ_point;
-    user->status->dex += operate.dex;
-    user->status->fame += operate.fame;
-    user->status->intel += operate.intel;
-    user->status->luck += operate.luck;
-    user->status->mental += operate.mental;
-    user->status->fighting_point += operate.fighting_point;
-    user->status->level += operate.level;
+void    operate_status(t_user *user, t_status operate, int score){
+    user->status->exp += (operate.exp * score / 100);
+    user->status->activ_point += (operate.activ_point * score / 100);
+    user->status->dex += (operate.dex * score / 100);
+    user->status->fame += (operate.fame * score / 100);
+    user->status->intel += (operate.intel * score / 100);
+    user->status->luck += (operate.luck * score / 100);
+    user->status->mental += (operate.mental * score / 100);
+    user->status->fighting_point += (operate.fighting_point * score / 100);
+    user->status->level += (operate.level * score / 100);
 }
 
 void    subject_success(t_user *user)
@@ -21,7 +21,7 @@ void    subject_success(t_user *user)
 
     work = user->sub_list->personal;
     cur = user->sub_list->cur_personal;
-    operate_status(user, work->reward.stat);
+    operate_status(user, work->reward.stat, work->stat.percent);
     lev_up = check_level_up(user);
     while (1)
     {
@@ -40,22 +40,28 @@ void    subject_success(t_user *user)
     }
 }
 
-void    print_fail_massage(int index)
+void    print_fail_massage(void)
 {
-    int     ran = 5 - index;
+    int     i = rand() % 3;
+    int     j = rand() % 5;
     char    norm[5][100] = {"연산자 이후 띄어쓰기를 하지 않았습니다...", "탭이 들어갈 자리에 스페이스가 들어갔습니다...", "헤더를 까먹고 안넣었습니다...", "힌 즐에 여러 번 대입을 사용했습니다...", "들여쓰기가 제대로 되지 않았습니다..."};
     char    compile[5][100] = {"-Wall : 사용되지 않은 변수로 컴파일 실패...", "함수에 return이 없어 컴파일에 실패했습니다...", "매개변수를 제대로 넣지 않아 컴파일에 실패했습니다...", "자료형을 잘못 사용해 컴파일에 실패했습니다...", "dose not compile! 이유를 알 수 없습니다..."};
-    char    ect[5][100] = {"segmentation fault!! 프로그램이 제대로 실행되지 않습니다...", "BUS ERROR!! 버스타고 집에 가고싶습니다...", "", "", ""};
+    char    ect[5][100] = {"segmentation fault!! 프로그램이 제대로 실행되지 않습니다...", "BUS ERROR!! 버스타고 집에 가고싶습니다...", "알 수 없는 오류가 발생했습니다! 코딩의 신에게 저주받은 것 같습니다...", "알 수 없는 힘에 의해 파일이 사라졌습니다...", "뷁뷇뷁뷇뷁!!!!!"};
     
-    if (index < 2)
+    if (i == 0)
     {
         printf("       norm error!!\n");
-        printf("       %s\n", norm[index]);
+        printf("       %s\n", norm[j]);
+    }
+    else if (i == 1)
+    {
+        printf("       compile error!!\n");
+        printf("       %s\n", compile[j]);
     }
     else
     {
-        printf("       compile error!!\n");
-        printf("       %s\n", compile[ran]);
+        printf("       error!!\n");
+        printf("       %s\n", ect[j]);
     }
 }
 
@@ -68,7 +74,6 @@ void    subject_fail(t_user *user)
     t_subject   *work;
 
     work = user->sub_list->personal;
-    ran = rand() % 5;
     user->status->mental--;
     user->status->activ_point--;
     work->stat.success += user->status->mental;
@@ -76,7 +81,7 @@ void    subject_fail(t_user *user)
     while (1)
     {
         print_header();
-        print_fail_massage(ran);
+        print_fail_massage();
         printf("\n\n\n\n");
         go_esc("뒤로 가기");
         print_footer();
@@ -132,15 +137,9 @@ void    result_exam(t_user *user, t_event_day *day)
     int cur_exam = user->sub_list->cur_exam;
     int score = user->sub_list->exam[cur_exam].stat.hp;
     t_subject exam = user->sub_list->exam[cur_exam];
-    
-    operate_status(user, exam.reward.stat);
 
+    operate_status(user, exam.reward.stat, 100 - exam.stat.hp);
     print_result_screen(user, day, exam.reward.stat, exam.event.title, 100 - score);
-  
-
-//    exam()를 진행했습니다.
-//    점수 : %d;
-//    뭐를 진행했는지, 점수가 어떻게 나왔는지(시험)
 }
 
 void    print_eval(t_user *user, t_event_day *day, int point)
@@ -153,19 +152,19 @@ void    print_eval(t_user *user, t_event_day *day, int point)
     j = rand() % 5;
     ran = rand() % user->status->luck;
     suc = ran * point;
-    if (suc > 20 && j == 0)
+    if (suc > 20 || j == 0)
     {
         user->status->intel += point;
         print_peer_type(user, day, name[i], type[j], point);
     }
-    else if (suc >= 10 && j != 4)
+    else if ((suc >= 10 && j != 4) || (suc >= 10 && j != 3))
     {
         user->status->intel += point / 2;
         print_peer_type(user, day, name[i], type[j], point / 2);
     }
     else
     {
-        user->status->intel += point;
+        user->status->intel -= point;
         if (user->status->intel < 1)
             user->status->intel = 1;
         print_peer_type(user, day, name[i], type[j], -point);
@@ -176,7 +175,7 @@ void    print_peer_type(t_user *user, t_event_day *day, char *name, char *type, 
 {
     int kb = 0;
 
-        while (1)
+    while (1)
     {
         print_header();
         if (day != NULL)
@@ -190,4 +189,31 @@ void    print_peer_type(t_user *user, t_event_day *day, char *name, char *type, 
         if (kb == 27)
             return ;
     }
+}
+
+void    result_rush(t_user *user, t_event_day *day)
+{
+    int         kb;
+    int         ran = rand() % 100;
+    int         i = rand() % 5;
+    int         cur = user->sub_list->cur_rush;
+    int         score = user->sub_list->rush[cur].stat.comprehension / 3;
+    t_status    reward = user->sub_list->rush[cur].reward.stat;
+
+    if (ran >= 80 && score)
+        print_result_screen(user, day, reward, user->sub_list->rush[cur].event.title, score);
+    else
+        while (1)
+        {
+            print_header();
+            if (day != NULL)
+                print_day_info(day, user);
+            print_fail_massage();
+            printf("       (esc)뒤로 가기");
+            print_footer();
+            kb = linux_kbhit();
+            basic_information_key(kb, user);
+            if (kb == 27)
+                return ;
+        }
 }
