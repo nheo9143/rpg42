@@ -38,7 +38,7 @@ t_user		*init_user(char type) {
 		user->status->intel 	    	= 15;
 		user->status->dex	        	= 5;
 		user->status->luck		        = 10;
-		user->status->mental	        = 10;
+		user->status->mental	        = 0;
 		user->status->activ_point       = 10;
 		user->status->fame		    	= 0;
 		user->status->fighting_point	= 0;
@@ -49,7 +49,7 @@ t_user		*init_user(char type) {
 		user->status->intel 	    	= 1;
 		user->status->dex	        	= 1;
 		user->status->luck		        = 10;
-		user->status->mental	        = 10;
+		user->status->mental	        = 0;
 		user->status->activ_point       = 10;
 		user->status->fame		    	= 0;
 		user->status->fighting_point	= 0;

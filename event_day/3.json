@@ -10,8 +10,8 @@
         "intel":0,
         "dex":0,
         "luck":0,
-        "mental":0,
-        "activ_point":0,
+        "mental":-5,
+        "activ_point":-10,
         "fame":0,
         "fighting_point":0 
     }

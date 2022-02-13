@@ -6,7 +6,6 @@
 
 void	start_42rpg(){
 	static	t_user	*user;
-    int             day = 0;
     t_event_day     *event_day;
 	char            chrtype;
 
@@ -21,11 +20,15 @@ void	start_42rpg(){
     
     for (int i = 0; i < 3; i++)
     {
+        user->status->activ_point = 100 + user->status->dex;
         ft_event_day(event_day, user);
         // ft_event_day(event_day[i], user);
         // 0:개인과제 하는 날, 1:시험, 2:러쉬 활성화
         day_work(i, user, event_day);
-        user->status->activ_point = 100;
+        print_header();
+        printf("       집에 가는 중...");
+        print_footer();
+        usleep(1500000);
         event_day++;
     }
     
@@ -37,6 +40,5 @@ void	start_42rpg(){
 }
 
 int main(void){
-	system("mode con cols=80 lines=25");
 	start_42rpg();
 }

@@ -7,15 +7,19 @@ void    do_project(t_user *user, t_event_day *day){
     int         kb = 0;
     int         ran = 0;
     int         use = 0;
+    int         cur = user->sub_list->cur_personal;
     t_subject   *work;
 
-    work = user->sub_list->personal;
+    work = &user->sub_list->personal[cur];
     if (work->stat.percent >= 100)
     {
         print_screen(user, day, "과제를 끝냈습니다. 제출해 주세요.", "뒤로 가기");
         return ;
     }
     use = use_action_point(user);
+    if (use == 0)
+        return ;
+    progress_message(work->event.title, "진행");
     work->stat.percent += (user->status->intel * use);
     if (work->stat.percent > 100)
         work->stat.percent = 100;
@@ -29,6 +33,7 @@ void    do_project(t_user *user, t_event_day *day){
         go_esc("뒤로 가기");
         print_footer();
         kb = linux_kbhit();
+        basic_information_key(kb, user);
         if (kb == 27)
             return ;
     }
@@ -42,6 +47,7 @@ void    review_project(t_user *user, t_event_day *day)   {
         print_screen(user, day, "과제를 다 진행하지 못했습니다. 과제를 다 작성해 주세요.", "뒤로 가기");
         return ;
     }
+    progress_message(user->sub_list->personal->event.title, "검토");
     ran = rand() % user->status->luck;
     //수정 필요??라
     print_screen(user, day, "과제를 검토했습니다. 제출시 성공률이 증가합니다.", "뒤로 가기");
@@ -52,29 +58,23 @@ void    review_project(t_user *user, t_event_day *day)   {
 void    push_project(t_user *user, t_event_day *day){
     int         ran = 0;
     int         kb = 0;
+    int         cur = user->sub_list->cur_personal;
     t_subject   *work;
 
-    work = user->sub_list->personal;
+    work = &user->sub_list->personal[cur];
     if (work->stat.percent < 100)
     {
         print_screen(user, day, "과제를 다 진행하지 못했습니다. 끝내고 제출해 주세요.", "뒤로 가기");
         return ;
     }
+    progress_message(user->sub_list->personal->event.title, "제출");
     ran = rand() % 100;
-    if (work->stat.success + user->status->mental >= ran)
+    if (work->stat.success + (user->status->mental - 10) >= ran)
         subject_success(user);
     else
         subject_fail(user);
     user->status->activ_point--;
     return ;
-}
-
-void    print_item(t_user *user){
-    print_screen(user, NULL, "업데이트 예정입니다", "뒤로 가기");
-}
-
-void    print_equip(t_user *user){
-    print_screen(user, NULL, "업데이트 예정입니다", "뒤로 가기");
 }
 
 
@@ -84,15 +84,11 @@ void    peer_eval_action(t_user *user, t_event_day *day)
     int ran = 0;
     int suc = 0;
 
-    ran = rand() % user->status->luck;
     use = use_action_point(user);
-    suc = ran * use;
-    if (suc >= 10)
-        great_eval(user, day, use);
-    else if (suc >= 5)
-        good_eval(user, day, use);
-    else
-        bad_eval(user, day, use);
+    if (use == 0)
+        return ;
+    progress_message("동료 평가", "진행");
+    print_eval(user, day, use);
 }
 
 void    personal_action(t_user *user, t_event_day *day)
@@ -124,6 +120,8 @@ void    action_normal_day(t_user *user, t_event_day *day)
 {
     int kb = 0;
 
+    if (day->day == 3)
+        print_peer(user, day);
     while (1)
     {
         print_screen(user, day, "무엇을 할까?", "개인과제,동료평가,러쉬공부");
@@ -140,7 +138,8 @@ void    action_normal_day(t_user *user, t_event_day *day)
         else if (kb == 'c')
             print_screen(user, day, "RUSH 진행 기간이 아닙니다", "뒤로 가기");
         if (kb == 27)
-            break ;
+            if (ask_exit(user, day))
+                break ;
     }
 }
 
@@ -158,6 +157,9 @@ void    rush_action(t_user *user, t_event_day *day)
     peer = work->peer;
     user_compre = ran;
     use = use_action_point(user);
+    if (use == 0)
+        return ;
+    progress_message(user->sub_list->rush->event.title, "진행");
     for (int i = 0; i < 2; i++){
         switch (peer[i].status.type)
         {

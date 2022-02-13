@@ -174,20 +174,22 @@ int    print_distractor(char *distractor)
 		select++;
 		i++;
 	}
-    printf("\n       (esc)뒤로 가기");
-	printf("\n\n");
+    printf("\n\n\n       (esc)뒤로 가기");
 	return 0;
 }
 
 void	print_day_info(t_event_day *day, t_user *user){
+	int	cur_p = user->sub_list->cur_personal;
+	int	cur_e = user->sub_list->cur_exam;
+
 	printf("       %s:%d%68s : %d\n", "day", day->day, "남은 행동력(시간)", user->status->activ_point);
     if (day->day % 3 == 2)
     {
-    	printf("       %s:%d%-31s s)%s, i)%s, e)%s\n", "EXAM 진행도", 100 - user->sub_list->exam->stat.hp, "/100", "status", "items", "equipment");
+    	printf("       %s:%d%-25s w)%s, s)%s, i)%s, e)%s\n", "EXAM 진행도", 100 - user->sub_list->exam->stat.hp, "/100", "work", "status", "items", "equipment");
         printf("       %s:%d\n", "retry 횟수", user->sub_list->exam->stat.try_cnt);
     }
     else
-		printf("       %s:%-35s s)%s, i)%s, e)%s\n", "현재 과제", user->sub_list->personal->event.title, "status", "items", "equipment");
+		printf("       %s:%-29s w)%s, s)%s, i)%s, e)%s\n", "현재 과제", user->sub_list->personal[cur_p].event.title, "work", "status", "items", "equipment");
 	
 }
 
@@ -231,4 +233,165 @@ void    print_screen(t_user *user, t_event_day *day, char *text, char *distracto
 
         print_footer();
     }
+}
+
+void	print_peer(t_user *user, t_event_day *day)
+{
+	int	kb = 0;
+
+	while (1)
+	{
+		print_header();
+		printf("	   %s 진행 기간입니다!\n\n", user->sub_list->rush->event.title);
+		printf("       동료 %s와 같은 팀이 되었습니다!\n", user->sub_list->rush->peer[0].name);
+		printf("       동료 %s와 같은 팀이 되었습니다!\n", user->sub_list->rush->peer[1].name);
+		printf("\n\n\n\n");
+		printf("       (esc)뒤로 가기");
+		print_footer();
+		kb = linux_kbhit();
+		if (kb == 27)
+			return ;
+	}
+}
+
+void	print_personal_work(t_user *user)
+{
+	int	kb = 0;
+	int	cur_p = user->sub_list->cur_personal;
+
+	while (1)
+	{
+		print_header();
+		printf("       -------개인 과제-------\n\n");
+		for (int i = 0; i <= cur_p; i++)
+		{
+				if (i == cur_p)
+					printf("       >%s(진행 중), %d / 100\n", user->sub_list->personal[i].event.title, user->sub_list->personal[i].stat.percent);
+				else
+					printf("       █%s(진행 완료), %d / 100\n", user->sub_list->personal[i].event.title, user->sub_list->personal[i].stat.percent);
+			printf("\n");
+		}
+		for (int i = cur_p + 1; i < 10; i++)
+		{
+			printf("       -%s(아직 열리지 않음)\n", user->sub_list->personal[i].event.title);
+			printf("\n");
+		}
+		printf("\n       (esc)뒤로 가기");
+		print_footer();
+		kb = linux_kbhit();
+		if (kb == 27)
+			return ;
+	}
+}
+
+void	print_exam_work(t_user *user)
+{
+	int	kb = 0;
+	int	cur_e = user->sub_list->cur_exam;
+
+	while (1)
+	{
+		print_header();
+		printf("\n       -------EXAM-------\n\n");
+		for (int i = 0; i <= cur_e; i++)
+		{
+			if (i == cur_e)
+				printf("       >%s(진행 중), %d / 100\n", user->sub_list->exam[i].event.title, 100 - user->sub_list->exam[i].stat.hp);
+			else
+				printf("       █%s(진행 완료), %d / 100\n", user->sub_list->exam[i].event.title, 100 - user->sub_list->exam[i].stat.hp);
+			printf("\n");
+		}
+		for (int i = cur_e + 1; i < 3; i++)
+		{
+			printf("       -%s(아직 열리지 않음)\n", user->sub_list->exam[i].event.title);
+			printf("\n");
+		}
+		printf("\n\n       (esc)뒤로 가기");
+		print_footer();
+		kb = linux_kbhit();
+		if (kb == 27)
+			return ;
+	}
+}
+
+void	print_rush_work(t_user *user)
+{
+	int	kb = 0;
+	int	cur_r = user->sub_list->cur_rush;
+
+	while (1)
+	{
+		print_header();
+		printf("\n       -------RUSH-------\n\n");
+		for (int i = 0; i <= cur_r; i++)
+		{
+			if (i == cur_r)
+				printf("       >%s(진행 중), %d / 100\n", user->sub_list->rush[i].event.title, user->sub_list->rush[i].stat.percent);
+			else
+				printf("       █%s(진행 완료), %d / 100\n", user->sub_list->rush[i].event.title, user->sub_list->rush[i].stat.percent);
+			printf("\n");
+		}
+		for (int i = cur_r + 1; i < 3; i++)
+		{
+			printf("       -%s(아직 열리지 않음)\n", user->sub_list->rush[i].event.title);
+			printf("\n");
+		}
+		printf("\n\n       (esc)뒤로 가기");
+		print_footer();
+		kb = linux_kbhit();
+		if (kb == 27)
+			return ;
+	}
+}
+
+void	print_work(t_user * user)
+{
+	int	kb = 0;
+
+	while (1)
+	{
+		print_header();
+		printf("\n\n\n\n");
+		printf("       과제 목록\n\n");
+		print_distractor("개인 과제,EXAM,RUSH");
+		print_footer();
+		kb = linux_kbhit();
+		if (kb == 'a')
+			print_personal_work(user);
+		else if (kb == 'b')
+			print_exam_work(user);
+		else if (kb == 'c')
+			print_rush_work(user);
+		if (kb == 27)
+			return ;
+	}
+}
+
+void    print_item(t_user *user){
+    print_screen(user, NULL, "업데이트 예정입니다", "뒤로 가기");
+}
+
+void    print_equip(t_user *user){
+    print_screen(user, NULL, "업데이트 예정입니다", "뒤로 가기");
+}
+
+void    progress_message(char *name, char *act)
+{
+    print_header();
+    printf("       %s를 %s합니다.\n", name, act);
+    print_footer();
+    usleep(600000);
+    print_header();
+    printf("       %s를 %s합니다..\n", name, act);
+    print_footer();
+    usleep(600000);
+    print_header();
+    printf("       %s를 %s합니다...\n", name, act);
+    print_footer();
+    usleep(600000);
+}
+
+void	print_works(t_user *user, t_event_day *day)
+{
+
 }

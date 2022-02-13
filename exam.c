@@ -14,12 +14,11 @@ void    basic_exam_print(t_user *user, t_event_day *day, char *str)
         printf("       %s:%d\n", "retry 횟수", user->sub_list->exam->stat.try_cnt);
         printf("\n\n\n\n\n\n\n");
         printf("       %s\n", str);
-        // go_esc("뒤로 가기");
-        // print_footer();
         basic_information_key(kb, user);
         kb = linux_kbhit();
         if (kb == 27)
-            return ;
+            if (ask_exit(user, day))
+                return ;
     }    
 }
 
@@ -35,58 +34,66 @@ void    do_exam(t_user *user, t_event_day *day){
         print_screen(user, day, "문제를 다 풀었습니다. 제출 해주세요.", "뒤로 가기");
         return ;
     }
-    work->stat.done = 1;
     use = use_action_point(user);
-    ran = rand() % user->status->luck + (use);
+    if (use == 0)
+        return ;
+    work->stat.done = 1;
+    progress_message("문제", "진행");
+    ran = rand() % user->status->luck + use;
     if (ran > work->stat.avoid)
-        work->stat.success = 1;
+        work->stat.avoid += ran;
     else
-        work->stat.success = 0;
+        work->stat.success += 0;
     print_screen(user, day, "문제의 답을 다 작성했습니다.", "뒤로 가기");
 }
 
 void    review_exam(t_user *user, t_event_day *day)   {
     int ran = 0;
 
+    progress_message("문제", "검토");
     ran = rand() % user->status->luck;
-    user->sub_list->exam->stat.avoid -= user->status->luck;
-    print_screen(user, day, "문제를 검토했습니다. 제출 시 정답률이 증가합니다!", "뒤로 가기");
-    user->sub_list->personal->stat.success += ran;
+    user->sub_list->exam->stat.avoid += ran;
     user->status->activ_point--;
+    print_screen(user, day, "문제를 검토했습니다. 제출 시 정답률이 증가합니다!", "뒤로 가기");
 }
 
 void    push_exam(t_user *user, t_event_day *day){
     int     ran = 0;
     int     kb = 0;
+    int     success = 0;
     t_subject  *work;
 
     work = user->sub_list->exam;
     ran = rand() % 100;
     if (work->stat.done == 0)
         print_screen(user, day, "문제를 풀고 나서 제출해 주세요.", "뒤로 가기");
-    else if (work->stat.success)
+    else if (work->stat.avoid >= ran)
     {
+        progress_message("문제", "제출");
         user->status->activ_point--;
-        work->stat.avoid = work->stat.hp - 10;
+        work->stat.avoid = 0;
         work->stat.hp -= user->status->intel;
         if (work->stat.hp < 0)
             work->stat.hp = 0;
-        work->stat.try_cnt = 1;
+        work->stat.try_cnt = 0;
         print_screen(user, day, "맞았습니다! 다음 문제에 도전해 주세요,", "다음으로");
+        work->stat.done = 0;
     }
     else
     {
+        progress_message("문제", "제출");
         work->stat.try_cnt++;
         work->stat.time += work->stat.try_cnt * 2;
         if (work->stat.time <= user->status->activ_point)
         {
+            work->stat.time = 0;
             user->status->activ_point -= work->stat.time;
             print_screen(user, day, "틀렸습니다ㅠㅠ try횟수 + 1, 제출 대기시간 두배 증가(행동력 소모 두배)", "뒤로 가기");
         }
         else
             print_screen(user, day, "남은 시간보다 대기 시간이 더 깁니다...ㅠㅠ", "뒤로 가기");
+            work->stat.done = 0;
     }
-    work->stat.done = 0;
     return ;
 }
 
@@ -110,7 +117,8 @@ void    action_exam_day(t_user *user, t_event_day *day)
         else if (kb == 'c')
             push_exam(user, day);
         if (kb == 27)
-            break ;
+            if (ask_exit(user, day))
+                break ;
     }
     result_exam(user, day);
 }

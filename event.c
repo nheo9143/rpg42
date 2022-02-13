@@ -2,20 +2,50 @@
 
 void    ft_event_day(t_event_day *event_day, t_user *user)  {
     int kb = 0;
+    t_status stat = event_day->reward_status;
 
     while (1)
     {
+        operate_status(user, stat);
         print_header();
         printf("      DAY %d - %s\n\n", event_day->day, event_day->event_title);
         printf("      %s\n", event_day->event_content);
-        printf("\n");
-        printf("\n");
-        printf("\n");
-        printf("\n");
-        printf("\n");
-        printf("\n");
-        printf("\n");
-        printf("\n");
+         if (stat.exp)
+            printf("       %-6s %d\n", "경험치", stat.exp);
+        else
+            printf("\n");
+        if (stat.intel)
+            printf("       %-6s %d\n", "cs지식", stat.intel);
+        else
+            printf("\n");
+        if (stat.dex)
+            printf("       %-6s %d\n", "dex", stat.dex);
+        else
+            printf("\n");
+        if (stat.fame)
+            printf("       %-6s %d\n", "fame", stat.fame);
+        else
+            printf("\n");
+        if (stat.luck)
+            printf("       %-6s %d\n", "luck",stat.luck);
+        else
+            printf("\n");
+        if (stat.mental)
+            printf("       %-6s %d\n", "mental", stat.mental);
+        else
+            printf("\n");
+        if (stat.fighting_point)
+            printf("       %-6s %d\n", "사기", stat.fighting_point);
+        else
+            printf("\n");
+        if (stat.activ_point)
+            printf("       오늘 %-6s %d\n", "행동력", stat.activ_point);
+        else
+            printf("\n");
+        if (stat.level)
+            printf("       %-6s %d\n", "레벨", stat.level);
+        else
+            printf("\n");
         go_next("다음");
         print_footer();
         kb = linux_kbhit();
@@ -27,10 +57,6 @@ void    ft_event_day(t_event_day *event_day, t_user *user)  {
 void    day_work(int date, t_user *user, t_event_day *day) {
     int kb = 0;
     int i = date % 3;
-    char    actions[4][3][20] = {{"개인 과제", "동료 평가", "없음"}, 
-                                {"소스 작성", "소스 검토", "과제 제출"}, 
-                                {"소스 작성", "소스 검토", "소스 제출"}, 
-                                {"개인 과제", "동료 평가", "러쉬 공부"}};
 
     while (1)
     {
@@ -38,6 +64,7 @@ void    day_work(int date, t_user *user, t_event_day *day) {
 		    action_normal_day(user, day);
         else if (i == 1)
             action_exam_day(user, day);
+        
 	   // 요일 출력 - 
         // 행동력 출력
         

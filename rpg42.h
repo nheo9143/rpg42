@@ -4,6 +4,7 @@
 # include <stdio.h>     // 파일 처리 함수가 선언된 헤더 파일
 # include <stdlib.h>    // malloc, free 함수가 선언된 헤더 파일
 # include <stdbool.h>   // bool, true, false가 정의된 헤더 파일
+# include <unistd.h>
 # include <string.h>    // strchr, memset, memcpy 함수가 선언된 헤더 파일
 # include "parson.h"
 
@@ -243,7 +244,7 @@ void    print_user_status(t_user *user);
 void    go_esc(char *str);
 void	go_next(char *str);
 int		linux_kbhit(void);
-void    operate_status(t_user *user, t_subject operate);
+void    operate_status(t_user *user, t_status operate);
 void    print_equip(t_user *user);
 void    print_item(t_user *user);
 void    ft_event_day(t_event_day *day, t_user *user);
@@ -255,13 +256,16 @@ void	print_day_info(t_event_day *day, t_user *user);
 int		check_level_up(t_user *user);
 void    basic_txt_print(t_user *user, t_event_day *day, char *str);
 int		basic_information_key(int kb, t_user *user);
-void    great_eval(t_user *user, t_event_day *day, int point);
-void    good_eval(t_user *user, t_event_day *day, int point);
-void    bad_eval(t_user *user, t_event_day *day, int point);
 void    basic_txt_print(t_user *user, t_event_day *day, char *str);
 char	**ft_split(char const *s, char c);
 void    print_screen(t_user *user, t_event_day *day, char *text, char *distractor);
 //void    action_normal_day(t_user *user, char **action1, char **action2);
 void    result_exam(t_user *user, t_event_day *day);
+int ask_exit(t_user *user, t_event_day *day);
+void	print_peer(t_user *user, t_event_day *day);
+void	print_work(t_user * user);
+void    progress_message(char *name, char *act);
+void    print_peer_type(t_user *user, t_event_day *day, char *name, char *type, int point);
+void    print_eval(t_user *user, t_event_day *day, int point);
 
 #endif

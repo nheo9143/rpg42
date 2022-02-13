@@ -15,11 +15,18 @@ void    go_next(char *str){
 }
 
 void    input_error(void){
-    printf("\n\n------------------------------------------------------------------\n");
-    printf("\n\n\n");
-    printf("       error(입력 오류) : 올바른 값을 입력해 주세요.\n\n\n");
-    printf("\n------------------------------------------------------------------\n");
-    printf("\n\n");
+    int kb = 0;
+
+    while (1)
+    {
+        print_header();
+        printf("       error(입력 오류) : 올바른 값을 입력해 주세요.\n\n\n\n");
+        printf("       (esc)뒤로 가기\n");
+        print_footer();
+        kb = linux_kbhit();
+        if (kb == 27)
+            break ;
+    }
 }
 
 void    print_title(void){
@@ -64,16 +71,19 @@ char    select_charictor(void){
         kb = linux_kbhit();
         if (kb == 'a' || kb == 'b')
         {
+            print_header();
             if (kb == 'a')
             {
-                printf("'전공자'캐릭터를 선택하셨습니다.\n");
+                printf("\n       '전공자'캐릭터를 선택하셨습니다.\n");
                 chrtype = 'a';
             }
             else if (kb == 'b')
             {
-                printf("'비전공자'캐릭터를 선택하셨습니다.\n");
+                printf("\n       '비전공자'캐릭터를 선택하셨습니다.\n");
                 chrtype = 'b';
             }
+            print_footer();
+            sleep(1);
             return (chrtype);
         }
         else
@@ -118,7 +128,7 @@ int    use_action_point(t_user *user)
         printf("\n\n       남은 행동력 : %d\n\n", user->status->activ_point);
         printf("       사용할 행동력 : ");
         scanf("%d", &use);
-        if (use > user->status->activ_point)
+        if (use > user->status->activ_point || use < 0)
             input_error();
         else
         {
@@ -139,6 +149,8 @@ int    basic_information_key(int kb, t_user *user)
         print_item(user);
     else if (kb == 'e')
         print_equip(user);
+    else if (kb == 'w')
+        print_work(user);
     return kb;
 }
 
@@ -219,4 +231,22 @@ char	**ft_split(char const *s, char c)
 		s = ft_next_strs(s, c, 1);
 	}
 	return (ptrs);
+}
+
+int ask_exit(t_user *user, t_event_day *day)
+{
+    int kb = 0;
+
+    while (1)
+    {
+        print_screen(user, day, "집에 가시겠습니까?", "집에 간다,집에 안간다");
+        kb = linux_kbhit();
+        basic_information_key(kb, user);
+        if (kb == 'a')
+            return (1);
+        else if (kb == 'b')
+            return (0);
+        else if (kb == 27)
+            return (0);
+    }
 }
