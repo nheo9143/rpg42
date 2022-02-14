@@ -1,17 +1,17 @@
 {
     "event":{
-        "title":"Event 6",
-	    "content":"며칠동안 잠을 제대로 못 잤더니 항상 피곤하다."
+        "title":"날벼락",
+	    "content":"길을 가다 하늘에서 떨어지는 화분에 머리를 맞았다. 머리가 너무 아프다ㅠㅠ"
     },
     "reward":{
         "status":{
             "level":0,
             "exp":0,
-            "intel":0,
+            "intel":-10,
             "dex":0,
             "luck":0,
-            "mental":-5,
-            "activ_point":-10,
+            "mental":-1,
+            "activ_point":0,
             "fame":0,
             "fighting_point":0 
         },

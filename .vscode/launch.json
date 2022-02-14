@@ -8,7 +8,7 @@
             "name": "C/C++: gcc Build and debug active file",
             "type": "lldb",
             "request": "launch",
-            "program": "/Users/heonamjun/Projects/rpg42/main",
+            "program": "/Users/heonamjun/Projects/rpg42/rpg42",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

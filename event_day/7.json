@@ -1,7 +1,7 @@
 {
     "event":{
-        "title":"Event 7",
-	    "content":"며칠동안 잠을 제대로 못 잤더니 항상 피곤하다."
+        "title":"안좋은 소문",
+	    "content":"클러스터에 당신에 관한 안좋은 소문이 퍼지는 것 같다."
     },
     "reward":{
         "status":{
@@ -10,9 +10,9 @@
             "intel":0,
             "dex":0,
             "luck":0,
-            "mental":-5,
-            "activ_point":-10,
-            "fame":0,
+            "mental":-1,
+            "activ_point":0,
+            "fame":-5,
             "fighting_point":0 
         },
         "equip": {

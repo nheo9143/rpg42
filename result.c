@@ -6,6 +6,8 @@ void    operate_status(t_user *user, t_status operate, int score){
     user->status->dex += (operate.dex * score / 100);
     user->status->fame += (operate.fame * score / 100);
     user->status->intel += (operate.intel * score / 100);
+    if (user->status->intel <= 0)
+        user->status->intel = 1;
     user->status->luck += (operate.luck * score / 100);
     user->status->mental += (operate.mental * score / 100);
     user->status->fighting_point += (operate.fighting_point * score / 100);
@@ -19,25 +21,11 @@ void    subject_success(t_user *user)
     int         cur;
     t_subject   *work;
 
-    work = user->sub_list->personal;
     cur = user->sub_list->cur_personal;
+    work = &user->sub_list->personal[cur];
     operate_status(user, work->reward.stat, work->stat.percent);
-    lev_up = check_level_up(user);
-    while (1)
-    {
-        print_header();
-        printf("       %s를 통과했습니다!!!\n\n", work[cur].event.title);
-        user->sub_list->cur_personal++;
-        for (int i = 0; i < lev_up; i++)
-            printf("       레벨이 올랐습니다!\n");
-        printf("\n");
-        go_esc("뒤로 가기");
-        print_footer();
-        kb = linux_kbhit();
-        basic_information_key(kb, user);
-        if (kb == 27)
-            return ;
-    }
+    print_result_screen(user, NULL, work->reward.stat, work->event.title, work->stat.percent);
+    user->sub_list->cur_personal++;
 }
 
 void    print_fail_massage(void)
@@ -67,13 +55,12 @@ void    print_fail_massage(void)
 
 void    subject_fail(t_user *user)
 {
-    int kb = 0;
-    int ran = 0;
-    int lev_up = 0;
-    t_status operate;
+    int         kb = 0;
+    int         cur;
     t_subject   *work;
 
-    work = user->sub_list->personal;
+    cur = user->sub_list->cur_personal;
+    work = &user->sub_list->personal[cur];
     user->status->mental--;
     user->status->activ_point--;
     work->stat.success += user->status->mental;
@@ -83,11 +70,11 @@ void    subject_fail(t_user *user)
         print_header();
         print_fail_massage();
         printf("\n\n\n\n");
-        go_esc("뒤로 가기");
+        go_next();
         print_footer();
         kb = linux_kbhit();
         basic_information_key(kb, user);
-        if (kb == 27)
+        if (kb == 'n')
             return ;
     }
 }
@@ -123,11 +110,11 @@ void    print_result_screen(t_user *user, t_event_day *day, t_status exam, char 
             printf("       %-6s %d 증가\n", "레벨", exam.level * score / 100);
         check_level_up(user);
         printf("\n\n\n\n");
-        printf("       (esc)뒤로 가기");
+        go_next();
         print_footer();
         kb = linux_kbhit();
         basic_information_key(kb, user);
-        if (kb == 27)
+        if (kb == 'n')
             break;
     }
 }
@@ -146,25 +133,28 @@ void    print_eval(t_user *user, t_event_day *day, int point)
 {
     int     ran, suc, i, j;
     char    name[10][10] = {"jibae", "kipark", "gyepark", "silee", "cgim", "nheo", "donghuck", "jayoon", "jrim", "nakkim"};
-    char    type[5][30] = {"코딩의 신", "좋은 동료", "귀염둥이 동료", "열정적인 동료", "클러스터의 무법자"};
+    char    type[6][30] = {"코딩의 신", "좋은 동료", "귀염둥이 동료", "열정적인 동료", "클러스터의 무법자", "전설의 포켓몬"};
 
     i = rand() % 10;
-    j = rand() % 5;
+    j = rand() % 6;
     ran = rand() % user->status->luck;
     suc = ran * point;
-    if (suc > 20 || j == 0)
+    if (suc > 20 && j == 0)
     {
         user->status->intel += point;
+        user->status->fame++;
         print_peer_type(user, day, name[i], type[j], point);
     }
-    else if ((suc >= 10 && j != 4) || (suc >= 10 && j != 3))
+    else if (j == 0 || (suc >= 10 && j != 4) || (suc >= 10 && j != 3))
     {
         user->status->intel += point / 2;
+        user->status->fame++;
         print_peer_type(user, day, name[i], type[j], point / 2);
     }
     else
     {
         user->status->intel -= point;
+        user->status->fame--;
         if (user->status->intel < 1)
             user->status->intel = 1;
         print_peer_type(user, day, name[i], type[j], -point);
@@ -173,20 +163,29 @@ void    print_eval(t_user *user, t_event_day *day, int point)
 
 void    print_peer_type(t_user *user, t_event_day *day, char *name, char *type, int point)
 {
-    int kb = 0;
-
+    int     kb = 0;
+    char    last_word = name[strlen(name) - 1];
     while (1)
     {
         print_header();
         if (day != NULL)
             print_day_info(day, user);
         printf("\n\n\n\n");
-        printf("       %s %s와 동료평가를 진행합니다. cs지식이 %d 상승합니다.\n\n", type, name, point);
-        printf("       (esc)뒤로 가기");
+        if (last_word =='a' || last_word == 'e' || last_word == 'o' || last_word == 'u' || last_word == 'i')
+        {
+            printf("       %s %s와 동료평가를 진행합니다. cs지식이 %d 상승합니다.\n", type, name, point);
+            printf("       fame이 상승합니다.\n\n");
+        }
+        else
+        {
+            printf("       %s %s과 동료평가를 진행합니다. cs지식이 %d 상승합니다.\n", type, name, point);
+            printf("       fame이 상승합니다.\n\n");
+        }
+        go_next();
         print_footer();
         kb = linux_kbhit();
         basic_information_key(kb, user);
-        if (kb == 27)
+        if (kb == 'n')
             return ;
     }
 }
@@ -209,11 +208,11 @@ void    result_rush(t_user *user, t_event_day *day)
             if (day != NULL)
                 print_day_info(day, user);
             print_fail_massage();
-            printf("       (esc)뒤로 가기");
+            go_next();
             print_footer();
             kb = linux_kbhit();
             basic_information_key(kb, user);
-            if (kb == 27)
+            if (kb == 'n')
                 return ;
         }
 }

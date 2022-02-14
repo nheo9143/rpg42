@@ -9,7 +9,7 @@
                 "-g",
                 "/Users/heonamjun/Projects/rpg42/*.c",
                 "-o",
-                "/Users/heonamjun/Projects/rpg42/main"
+                "/Users/heonamjun/Projects/rpg42/rpg42"
             ],
             "options": {
                 "cwd": "${fileDirname}"

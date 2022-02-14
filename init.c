@@ -14,6 +14,8 @@ void read_event_from_object(void *ptr, JSON_Object *event);
 void read_reward_from_object(void *ptr, JSON_Object *reward);
 void shuffle(t_event_day* arr, int size);
 void *init_peers();
+t_user	*subject_reward_by_type(t_user *user, char type);
+
 
 const char *EXAM_FILE = "exam.json";
 const char *RUSH_FILE = "rush.json";
@@ -41,9 +43,9 @@ t_user *init_user(char type)
 	if (type == 'a')
 	{
 		user->type = 전공자;
-		user->status->intel = 15;
-		user->status->dex = 5;
-		user->status->luck = 10;
+		user->status->intel = 10;
+		user->status->dex = 10;
+		user->status->luck = 5;
 		user->status->mental = 0;
 		user->status->activ_point = 10;
 		user->status->fame = 0;
@@ -53,7 +55,7 @@ t_user *init_user(char type)
 	{
 		user->type = 비전공자;
 		user->status->intel = 1;
-		user->status->dex = 1;
+		user->status->dex = 5;
 		user->status->luck = 10;
 		user->status->mental = 0;
 		user->status->activ_point = 10;
@@ -61,6 +63,48 @@ t_user *init_user(char type)
 		user->status->fighting_point = 0;
 	}
 	user->sub_list = init_subjet_list();
+	user = subject_reward_by_type(user, type);
+	return user;
+}
+
+t_user	*subject_reward_by_type(t_user *user, char type)
+{
+	if (type == 'b')
+	{
+		for (int i = 0; i < 10; i++){
+			user->sub_list->personal[i].reward.stat.activ_point *= 15 / 10;
+			user->sub_list->personal[i].reward.stat.dex *= 15 / 10;
+			user->sub_list->personal[i].reward.stat.exp *= 15 / 10;
+			user->sub_list->personal[i].reward.stat.fame *= 15 / 10;
+			user->sub_list->personal[i].reward.stat.fighting_point *= 15 / 10;
+			user->sub_list->personal[i].reward.stat.intel *= 15 / 10;
+			user->sub_list->personal[i].reward.stat.level *= 15 / 10;
+			user->sub_list->personal[i].reward.stat.luck *= 15 / 10;
+			user->sub_list->personal[i].reward.stat.mental *= 15 / 10;
+		}
+		for (int i = 0; i < 4; i++){
+			user->sub_list->exam[i].reward.stat.activ_point *= 15 / 10;
+			user->sub_list->exam[i].reward.stat.dex *= 15 / 10;
+			user->sub_list->exam[i].reward.stat.exp *= 15 / 10;
+			user->sub_list->exam[i].reward.stat.fame *= 15 / 10;
+			user->sub_list->exam[i].reward.stat.fighting_point *= 15 / 10;
+			user->sub_list->exam[i].reward.stat.intel *= 15 / 10;
+			user->sub_list->exam[i].reward.stat.level *= 15 / 10;
+			user->sub_list->exam[i].reward.stat.luck *= 15 / 10;
+			user->sub_list->exam[i].reward.stat.mental *= 15 / 10;
+		}
+		for (int i = 0; i < 3; i++){
+			user->sub_list->rush[i].reward.stat.activ_point *= 15 / 10;
+			user->sub_list->rush[i].reward.stat.dex *= 15 / 10;
+			user->sub_list->rush[i].reward.stat.exp *= 15 / 10;
+			user->sub_list->rush[i].reward.stat.fame *= 15 / 10;
+			user->sub_list->rush[i].reward.stat.fighting_point *= 15 / 10;
+			user->sub_list->rush[i].reward.stat.intel *= 15 / 10;
+			user->sub_list->rush[i].reward.stat.level *= 15 / 10;
+			user->sub_list->rush[i].reward.stat.luck *= 15 / 10;
+			user->sub_list->rush[i].reward.stat.mental *= 15 / 10;
+		}
+	}
 	return user;
 }
 

@@ -170,11 +170,16 @@ int    print_distractor(char *distractor)
 		return cnt;
 	while (select != NULL && *select)
 	{
-		printf("       %c)%s\n", 'a' + i, *select);
+		if (i == 0)
+			printf("       %c)%s\n", 'z', *select);
+		else if (i == 1)
+			printf("       %c)%s\n", 'x', *select);
+		else if (i == 2)
+			printf("       %c)%s\n", 'c', *select);
 		select++;
 		i++;
 	}
-    printf("\n\n\n       (esc)뒤로 가기");
+	go_next();
 	return 0;
 }
 
@@ -208,11 +213,11 @@ void    print_screen(t_user *user, t_event_day *day, char *text, char *distracto
                 print_day_info(day, user);
             print_text(text);
 			printf("\n\n\n\n\n\n\n\n");
-			printf("       (esc)뒤로 가기");
+			go_next();
             print_footer();
             kb = linux_kbhit();
             basic_information_key(kb, user);
-			if (kb == 27)
+			if (kb == 'n')
 				return ;
 		}
 	}
@@ -246,10 +251,10 @@ void	print_peer(t_user *user, t_event_day *day)
 		printf("       동료 %s와 같은 팀이 되었습니다!\n", user->sub_list->rush->peer[0].name);
 		printf("       동료 %s와 같은 팀이 되었습니다!\n", user->sub_list->rush->peer[1].name);
 		printf("\n\n\n\n");
-		printf("       (esc)뒤로 가기");
+		go_next();
 		print_footer();
 		kb = linux_kbhit();
-		if (kb == 27)
+		if (kb == 'n')
 			return ;
 	}
 }
@@ -276,10 +281,10 @@ void	print_personal_work(t_user *user)
 			printf("       -%s(아직 열리지 않음)\n", user->sub_list->personal[i].event.title);
 			printf("\n");
 		}
-		printf("\n       (esc)뒤로 가기");
+		go_next();
 		print_footer();
 		kb = linux_kbhit();
-		if (kb == 27)
+		if (kb == 'n')
 			return ;
 	}
 }
@@ -306,10 +311,10 @@ void	print_exam_work(t_user *user)
 			printf("       -%s(아직 열리지 않음)\n", user->sub_list->exam[i].event.title);
 			printf("\n");
 		}
-		printf("\n\n       (esc)뒤로 가기");
+		go_next();
 		print_footer();
 		kb = linux_kbhit();
-		if (kb == 27)
+		if (kb == 'n')
 			return ;
 	}
 }
@@ -336,10 +341,10 @@ void	print_rush_work(t_user *user)
 			printf("       -%s(아직 열리지 않음)\n", user->sub_list->rush[i].event.title);
 			printf("\n");
 		}
-		printf("\n\n       (esc)뒤로 가기");
+		go_next();
 		print_footer();
 		kb = linux_kbhit();
-		if (kb == 27)
+		if (kb == 'n')
 			return ;
 	}
 }
@@ -356,13 +361,13 @@ void	print_work(t_user * user)
 		print_distractor("개인 과제,EXAM,RUSH");
 		print_footer();
 		kb = linux_kbhit();
-		if (kb == 'a')
+		if (kb == 'z')
 			print_personal_work(user);
-		else if (kb == 'b')
+		else if (kb == 'x')
 			print_exam_work(user);
 		else if (kb == 'c')
 			print_rush_work(user);
-		if (kb == 27)
+		if (kb == 'n')
 			return ;
 	}
 }
@@ -389,9 +394,4 @@ void    progress_message(char *name, char *act)
     printf("       %s를 %s합니다...\n", name, act);
     print_footer();
     usleep(600000);
-}
-
-void	print_works(t_user *user, t_event_day *day)
-{
-
 }

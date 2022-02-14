@@ -6,12 +6,9 @@
 
 int linux_kbhit(void);
 
-void    go_esc(char *str){
-    printf("        %s : (esc)\n", str);
-}
-
-void    go_next(char *str){
-    printf("        %s : (n)\n", str);
+void    go_next(void)
+{
+    printf("\n       (n)뒤로 가기\n");
 }
 
 void    input_error(void){
@@ -21,10 +18,10 @@ void    input_error(void){
     {
         print_header();
         printf("       error(입력 오류) : 올바른 값을 입력해 주세요.\n\n\n\n");
-        printf("       (esc)뒤로 가기\n");
+        go_next();
         print_footer();
         kb = linux_kbhit();
-        if (kb == 27)
+        if (kb == 'n')
             break ;
     }
 }
@@ -242,11 +239,11 @@ int ask_exit(t_user *user, t_event_day *day)
         print_screen(user, day, "집에 가시겠습니까?", "집에 간다,집에 안간다");
         kb = linux_kbhit();
         basic_information_key(kb, user);
-        if (kb == 'a')
+        if (kb == 'z')
             return (1);
-        else if (kb == 'b')
+        else if (kb == 'x')
             return (0);
-        else if (kb == 27)
+        else if (kb == 'n')
             return (0);
     }
 }

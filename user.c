@@ -32,10 +32,10 @@ void    print_user_status(t_user *user)
         printf("     %-15s: %d (당신이 클러스터에서 얼마나 유명한지를 나타냅니다)\n", "fame", user->status->fame);
         printf("     %-15s: %d (사기가 낮으면 다음 날의 정신력이 감소합니다)\n", "fighting_point", user->status->fighting_point);
         printf("\n\n\n\n");
-        go_esc("뒤로 가기");
+        go_next();
         print_footer();
         exit = linux_kbhit();
-        if (exit == 27)
+        if (exit == 'n')
             break ;
     }
 }
@@ -54,14 +54,15 @@ int check_level_up(t_user *user)
 {
     int i = 0;
 
-    if (user->status->exp < 100 * user->status->level)
-        return (0);
     while (user->status->exp >= 100 * user->status->level)
     {
         user->status->exp -= (100 * (user->status->level));
         level_up(user);
         i++;
     }
+    for (int j = 0; j < i; j++)
+        printf("       레벨이 올랐습니다!\n");
+    printf("\n");
     return (i);
 }
 

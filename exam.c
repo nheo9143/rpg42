@@ -16,7 +16,7 @@ void    basic_exam_print(t_user *user, t_event_day *day, char *str)
         printf("       %s\n", str);
         basic_information_key(kb, user);
         kb = linux_kbhit();
-        if (kb == 27)
+        if (kb == 'n')
             if (ask_exit(user, day))
                 return ;
     }    
@@ -108,17 +108,18 @@ void    action_exam_day(t_user *user, t_event_day *day)
         print_screen(user, day, "EXAM을 보는 날! 문제를 작성하고 제출해 EXAM을 뿌셔보자!", "문제 작성,문제 검토,문제 제출");
         kb = linux_kbhit();
         basic_information_key(kb, user);
-        if (user->status->activ_point <= 0 && (kb == 'a' || kb == 'b' || kb == 'c'))
+        if (user->status->activ_point <= 0 && (kb == 'z' || kb == 'x' || kb == 'c'))
             print_screen(user, day, "행동력이 부족합니다. 진행할 수 있는 행동이 없습니다", "뒤로 가기");
-        else if(kb == 'a')
+        else if(kb == 'z')
             do_exam(user, day);
-        else if (kb == 'b')
+        else if (kb == 'x')
             review_exam(user, day);
         else if (kb == 'c')
             push_exam(user, day);
-        if (kb == 27)
+        if (kb == 'n')
             if (ask_exit(user, day))
                 break ;
     }
     result_exam(user, day);
+    user->sub_list->cur_exam++;
 }

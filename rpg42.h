@@ -11,7 +11,7 @@
 # define SUBJECT_PERSONAL_MAX 17
 # define SUBJECT_EXAM_MAX 3
 # define SUBJECT_RUSH_MAX 3
-# define EVENT_DAY_MAX 7
+# define EVENT_DAY_MAX 8
 # define EVENT_DAY_PATH "./event_day/"
 # define JSON_PATH "./json/"
 
@@ -240,8 +240,7 @@ void    subject_fail(t_user *user);
 void    print_header(void);
 void    print_footer(void);
 void    print_user_status(t_user *user);
-void    go_esc(char *str);
-void	go_next(char *str);
+void	go_next(void);
 int		linux_kbhit(void);
 void    operate_status(t_user *user, t_status operate, int score);
 void    print_equip(t_user *user);
@@ -259,13 +258,14 @@ void    basic_txt_print(t_user *user, t_event_day *day, char *str);
 char	**ft_split(char const *s, char c);
 void    print_screen(t_user *user, t_event_day *day, char *text, char *distractor);
 void    result_exam(t_user *user, t_event_day *day);
-int ask_exit(t_user *user, t_event_day *day);
+int		ask_exit(t_user *user, t_event_day *day);
 void	print_peer(t_user *user, t_event_day *day);
 void	print_work(t_user * user);
 void    progress_message(char *name, char *act);
 void    print_peer_type(t_user *user, t_event_day *day, char *name, char *type, int point);
 void    print_eval(t_user *user, t_event_day *day, int point);
 void    result_rush(t_user *user, t_event_day *day);
+void    print_result_screen(t_user *user, t_event_day *day, t_status exam, char *subject, int score);
 
 
 #endif

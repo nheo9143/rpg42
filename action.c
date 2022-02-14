@@ -30,11 +30,11 @@ void    do_project(t_user *user, t_event_day *day){
         print_day_info(day, user);
         printf("\n\n\n\n\n\n\n\n");
         printf("       과제 진행도 : %d\n", work->stat.percent);
-        go_esc("뒤로 가기");
+        go_next();
         print_footer();
         kb = linux_kbhit();
         basic_information_key(kb, user);
-        if (kb == 27)
+        if (kb == 'n')
             return ;
     }
 }
@@ -67,7 +67,7 @@ void    push_project(t_user *user, t_event_day *day){
         print_screen(user, day, "과제를 다 진행하지 못했습니다. 끝내고 제출해 주세요.", "뒤로 가기");
         return ;
     }
-    progress_message(user->sub_list->personal->event.title, "제출");
+    progress_message(work->event.title, "제출");
     ran = rand() % 100;
     if (work->stat.success + (user->status->mental - 10) >= ran)
         subject_success(user);
@@ -100,15 +100,15 @@ void    personal_action(t_user *user, t_event_day *day)
         print_screen(user, day, "개인 과제를 하자. 뭘 할까?", "과제 작성,과제 검토,과제 제출");
         kb = linux_kbhit();
         basic_information_key(kb, user);
-        if (user->status->activ_point <= 0 && (kb == 'a' || kb == 'b' || kb == 'c'))
+        if (user->status->activ_point <= 0 && (kb == 'z' || kb == 'x' || kb == 'c'))
             print_screen(user, day, "행동력이 부족합니다. 진행할 수 있는 행동이 없습니다", "뒤로 가기");
-        else if(kb == 'a')
+        else if(kb == 'z')
             do_project(user, day);
-        else if (kb == 'b')
+        else if (kb == 'x')
             review_project(user, day);
         else if (kb == 'c')
             push_project(user, day);
-        if (kb == 27)
+        if (kb == 'n')
             break ;
     }
 }
@@ -125,17 +125,17 @@ void    action_normal_day(t_user *user, t_event_day *day)
         print_screen(user, day, "무엇을 할까?", "개인과제,동료평가,러쉬공부");
         kb = linux_kbhit();
         basic_information_key(kb, user);
-        if (user->status->activ_point <= 0 && (kb == 'a' || kb == 'b' || kb == 'c'))
+        if (user->status->activ_point <= 0 && (kb == 'z' || kb == 'x' || kb == 'c'))
             print_screen(user, day, "행동력이 부족합니다. 진행할 수 있는 행동이 없습니다", "뒤로 가기");
-        else if (kb == 'a')
+        else if (kb == 'z')
             personal_action(user, day);
-        else if (kb == 'b')
+        else if (kb == 'x')
             peer_eval_action(user, day);
         else if (kb == 'c' && (day->day == 3))
             rush_action(user, day);
         else if (kb == 'c')
             print_screen(user, day, "RUSH 진행 기간이 아닙니다", "뒤로 가기");
-        if (kb == 27)
+        if (kb == 'n')
             if (ask_exit(user, day))
                 break ;
     }

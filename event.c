@@ -46,7 +46,7 @@ void    ft_event_day(t_event_day *event_day, t_user *user)  {
             printf("       %-6s %d\n", "레벨", stat.level);
         else
             printf("\n");
-        go_next("다음");
+        go_next();
         print_footer();
         kb = linux_kbhit();
         if (kb == 'n')

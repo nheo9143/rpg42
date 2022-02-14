@@ -20,7 +20,7 @@ void	start_42rpg(){
 
     for (int i = 0; i < EVENT_DAY_MAX; i++)
     {
-        user->status->activ_point = 100 + user->status->dex;
+        user->status->activ_point = 20 + user->status->dex;
         ft_event_day(event_day, user);
         day_work(i, user, event_day);
         print_header();

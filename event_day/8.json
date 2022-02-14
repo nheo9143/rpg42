@@ -1,18 +1,18 @@
 {
     "event":{
-        "title":"만성 피로",
-	    "content":"며칠동안 잠을 제대로 못 잤더니 항상 피곤하다."
+        "title":"이럴수가",
+	    "content":"커넥티드 앞에서 학장님에게 커피를 쏟아버렸다."
     },
     "reward":{
         "status":{
             "level":0,
             "exp":0,
             "intel":0,
-            "dex":-1,
+            "dex":0,
             "luck":0,
-            "mental":-1,
+            "mental":-2,
             "activ_point":0,
-            "fame":0,
+            "fame":-1,
             "fighting_point":0 
         },
         "equip": {

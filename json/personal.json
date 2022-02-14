@@ -12,12 +12,12 @@
         "reward": {
             "status": {
               "level":0,
-              "exp":0,
+              "exp":50,
               "intel":1,
-              "dex":1,
-              "luck":1,
+              "dex":0,
+              "luck":0,
               "mental":1,
-              "activ_point":1,
+              "activ_point":0,
               "fame":0,
               "fighting_point":0 
             },
@@ -38,12 +38,12 @@
         "reward": {
             "status": {
               "level":0,
-              "exp":0,
+              "exp":50,
               "intel":1,
-              "dex":1,
-              "luck":1,
+              "dex":0,
+              "luck":0,
               "mental":1,
-              "activ_point":1,
+              "activ_point":0,
               "fame":0,
               "fighting_point":0 
             },
@@ -64,12 +64,12 @@
         "reward": {
             "status": {
               "level":0,
-              "exp":0,
+              "exp":60,
               "intel":1,
-              "dex":1,
-              "luck":1,
+              "dex":0,
+              "luck":0,
               "mental":1,
-              "activ_point":1,
+              "activ_point":0,
               "fame":0,
               "fighting_point":0 
             },
@@ -90,12 +90,12 @@
         "reward": {
             "status": {
               "level":0,
-              "exp":0,
+              "exp":60,
               "intel":1,
-              "dex":1,
-              "luck":1,
+              "dex":0,
+              "luck":0,
               "mental":1,
-              "activ_point":1,
+              "activ_point":0,
               "fame":0,
               "fighting_point":0 
             },
@@ -116,12 +116,12 @@
         "reward": {
             "status": {
               "level":0,
-              "exp":0,
+              "exp":80,
               "intel":1,
-              "dex":1,
-              "luck":1,
+              "dex":0,
+              "luck":0,
               "mental":1,
-              "activ_point":1,
+              "activ_point":0,
               "fame":0,
               "fighting_point":0 
             },
@@ -142,12 +142,12 @@
         "reward": {
             "status": {
               "level":0,
-              "exp":0,
+              "exp":70,
               "intel":1,
-              "dex":1,
-              "luck":1,
+              "dex":0,
+              "luck":0,
               "mental":1,
-              "activ_point":1,
+              "activ_point":0,
               "fame":0,
               "fighting_point":0 
             },
@@ -168,12 +168,12 @@
         "reward": {
             "status": {
               "level":0,
-              "exp":0,
+              "exp":100,
               "intel":1,
-              "dex":1,
-              "luck":1,
+              "dex":0,
+              "luck":0,
               "mental":1,
-              "activ_point":1,
+              "activ_point":0,
               "fame":0,
               "fighting_point":0 
             },
@@ -194,12 +194,12 @@
         "reward": {
             "status": {
               "level":0,
-              "exp":0,
+              "exp":80,
               "intel":1,
-              "dex":1,
-              "luck":1,
+              "dex":0,
+              "luck":0,
               "mental":1,
-              "activ_point":1,
+              "activ_point":0,
               "fame":0,
               "fighting_point":0 
             },
@@ -220,12 +220,12 @@
         "reward": {
             "status": {
               "level":0,
-              "exp":0,
+              "exp":70,
               "intel":1,
-              "dex":1,
-              "luck":1,
+              "dex":0,
+              "luck":0,
               "mental":1,
-              "activ_point":1,
+              "activ_point":0,
               "fame":0,
               "fighting_point":0 
             },
@@ -246,12 +246,12 @@
         "reward": {
             "status": {
               "level":0,
-              "exp":0,
+              "exp":120,
               "intel":1,
-              "dex":1,
-              "luck":1,
+              "dex":0,
+              "luck":0,
               "mental":1,
-              "activ_point":1,
+              "activ_point":0,
               "fame":0,
               "fighting_point":0 
             },
@@ -272,12 +272,12 @@
         "reward": {
             "status": {
               "level":0,
-              "exp":0,
+              "exp":80,
               "intel":1,
-              "dex":1,
-              "luck":1,
+              "dex":0,
+              "luck":0,
               "mental":1,
-              "activ_point":1,
+              "activ_point":0,
               "fame":0,
               "fighting_point":0 
             },
